@@ -3,10 +3,14 @@ session_start();
 
 require 'dbCon.php';
 
-//Input field validation
-function validate($inputData){ 
+// Input field validation
+function validate($inputData) { 
+  global $conn;
 
-  global $conn; 
+  if (!is_string($inputData)) {
+      return ''; // Return an empty string or handle it appropriately
+  }
+
   $validatedData = mysqli_real_escape_string($conn, $inputData);
   return trim($validatedData);
 }
