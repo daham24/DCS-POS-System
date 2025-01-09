@@ -7,7 +7,7 @@
     anecdotes, or even a very very short story.
   </p>
   <div class="button-container">
-    <button class="btn btn-primary" tabindex="0">Login</button>
+    <button class="login-button" tabindex="0"><a class="login-button" href="login.php">Login</a></button>
   </div>
   <img
     loading="lazy"
