@@ -65,6 +65,7 @@
   border-radius: 8px;
   align-self: stretch;
   margin: 163px 0 0;
+  box-shadow: 8px -3px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 a {
@@ -114,8 +115,8 @@ a {
   aspect-ratio: 0.74;
   object-fit: cover;
   height: 100vh;
-  border-radius: 0 0 0 0;
-  box-shadow: 8px 0 10px -3px rgba(0, 0, 0, 0.12);
+  border-radius: 8px 0 0 8px;
+  box-shadow: 8px -3px 10px 0 rgba(0, 0, 0, 0.12);
   flex-grow: 1;
 }
 
@@ -124,7 +125,7 @@ a {
   flex-direction: column;
   line-height: normal;
   width: 75%;
-  margin:20px 200px;
+  margin: 20px 200px;
 }
 
 .login-content {
@@ -223,7 +224,7 @@ a {
 
 @media (max-width: 991px) {
   .login-container {
-    padding-right: 20px;
+    padding-right: 0;
   }
 
   .login-wrapper {
@@ -233,7 +234,7 @@ a {
   }
 
   .form-column {
-    width: 100%;
+    width: 50%;
   }
 
   .login-title {
@@ -241,7 +242,12 @@ a {
   }
 
   .login-form {
-    padding: 0 20px;
+    padding: 20px 20px;
+  }
+
+  .login-image {
+    height: 33vh;
+    border-radius: 8px 8px 0px 0px;
   }
 }
 
