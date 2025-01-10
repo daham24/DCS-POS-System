@@ -27,6 +27,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Status</th> <!-- New column for is_ban -->
                 <th>Action</th>
               </tr>
             </thead>
@@ -37,6 +38,13 @@
                   <td><?= $adminItem['id']?></td>
                   <td><?= $adminItem['name']?></td>
                   <td><?= $adminItem['email']?></td>
+                  <td>
+                    <?php if($adminItem['is_ban'] == 1): ?>
+                      <span class="badge bg-danger">Inactive</span> <!-- Display for banned -->
+                    <?php else: ?>
+                      <span class="badge bg-success">Active</span> <!-- Display for active -->
+                    <?php endif; ?>
+                  </td>
                   <td>
                     <a href="admins-edit.php?id=<?=$adminItem['id']?>" class="btn btn-success btn-sm">Edit</a>
                     <a href="admins-delete.php?id=<?=$adminItem['id']?>" class="btn btn-danger btn-sm">Delete</a>
