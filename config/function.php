@@ -55,26 +55,40 @@ function insert($tableName, $data){
 }
 
 //Update data using this function
-function update($tableName, $id, $data){
-
+function update($tableName, $id, $data) {
   global $conn;
 
+  // Validate table name and ID
   $table = validate($tableName);
   $id = validate($id);
 
+  // Initialize the update query string
   $updateDataString = "";
 
-  foreach($data as $column => $value){
-    
-    $updateDataString .= $column. '='. "'$value'";
+  foreach ($data as $column => $value) {
+      // Validate each value and ensure null or integer consistency
+      if ($value === null) {
+          $updateDataString .= "$column=NULL, ";
+      } elseif (is_numeric($value)) {
+          $updateDataString .= "$column=" . intval($value) . ", ";
+      } else {
+          $updateDataString .= "$column='" . validate($value) . "', ";
+      }
   }
 
-  $finalUpdateData = substr(trim($updateDataString),0,-1);
+  // Remove the trailing comma and space
+  $updateDataString = rtrim($updateDataString, ', ');
 
-  $query = "UPDATE $table SET $finalUpdateData WHERE id='$id'";
+  // Construct and execute the update query
+  $query = "UPDATE $table SET $updateDataString WHERE id='$id'";
   $result = mysqli_query($conn, $query);
-  return $result;
 
+  // Handle errors
+  if (!$result) {
+      throw new Exception("Update failed: " . mysqli_error($conn));
+  }
+
+  return $result;
 }
 
 function getAll($tableName, $status = NULL){
@@ -95,43 +109,35 @@ function getAll($tableName, $status = NULL){
 
 }
 
-function getById($tableName, $id){
-  
+function getById($tableName, $id) {
   global $conn;
 
   $table = validate($tableName);
-  $status = validate($id);
+  $id = validate($id);
 
   $query = "SELECT * FROM $table WHERE id='$id' LIMIT 1";
   $result = mysqli_query($conn, $query);
 
-  if($result){
-    
-    if (mysqli_num_rows($result) == 1) {
-      
-      $row = mysqli_fetch_assoc($result);
-      $response = [
-        'status' => 404,
-        'data' => $row,
-        'message' => 'Record Found'
+  if ($result) {
+      if (mysqli_num_rows($result) == 1) {
+          $row = mysqli_fetch_assoc($result);
+          return [
+              'status' => 200,
+              'data' => $row,
+              'message' => 'Record Found'
+          ];
+      } else {
+          return [
+              'status' => 404,
+              'message' => 'No Data Found'
+          ];
+      }
+  } else {
+      return [
+          'status' => 500,
+          'message' => 'Something Went Wrong: ' . mysqli_error($conn)
       ];
-
-    }else{
-      $response = [
-        'status' => 404,
-        'message' => 'No Data Found'
-      ];
-      return $response;
-    }
-
-  }else{
-    $response = [
-      'status' => 500,
-      'message' => 'Something Went Wrong'
-    ];
-    return $response;
   }
-
 }
 
 //Delete data from database
@@ -146,6 +152,23 @@ function delete($tableName, $id){
   $result = mysqli_query($conn, $query);
   return $result;
 
+}
+
+function checkParamId($type){
+
+  if(isset($_GET[$type])){
+
+    if($_GET[$type] != ''){
+
+      return $_GET[$type];
+      
+    }else{
+      return '<h5>No Id Found</h5>';
+    }
+
+  }else{
+    return '<h5>No Id Given</h5>';
+  }
 }
 
 ?>
