@@ -49,4 +49,103 @@ $(document).ready(function () {
       },
     });
   }
+
+  // Proceed to place order button click
+  $(document).on("click", ".proceedToPlace", function () {
+    var cphone = $("#cphone").val();
+    var payment_mode = $("#payment_mode").val();
+
+    if (payment_mode == "") {
+      swal("Select Payment Mode", "Select your payment mode", "warning");
+      return false;
+    }
+
+    if (cphone == "" || !$.isNumeric(cphone)) {
+      swal("Enter Phone Number", "Enter a valid phone number", "warning");
+      return false;
+    }
+
+    var data = {
+      proceedToPlaceBtn: true,
+      cphone: cphone,
+      payment_mode: payment_mode,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "orders-code.php",
+      data: data,
+      success: function (response) {
+        var res = JSON.parse(response);
+        if (res.status == 200) {
+          window.location.href = "order-summery.php";
+        } else if (res.status == 404) {
+          swal(res.message, res.message, res.status_type, {
+            buttons: {
+              catch: {
+                text: "ADD Customer",
+                value: "catch",
+              },
+              cancel: "Cancel",
+            },
+          }).then((value) => {
+            switch (value) {
+              case "catch":
+                $("#c_phone").val(cphone);
+                $("#addCustomerModal").modal("show");
+                break;
+              default:
+                // Handle cancel
+                $("#addCustomerModal").modal("hide");
+                break;
+            }
+          });
+        } else {
+          swal(res.message, res.message, res.status_type);
+        }
+      },
+    });
+  });
+
+  // Save customer button click  
+  $(document).on("click", ".saveCustomer", function () {
+    var c_name = $("#c_name").val();
+    var c_phone = $("#c_phone").val();
+    var c_email = $("#c_email").val();
+
+    if (c_name != "" && c_phone != "") {
+      if ($.isNumeric(c_phone)) {
+        var data = {
+          saveCustomerBtn: true,
+          name: c_name,
+          phone: c_phone,
+          email: c_email,
+        };
+
+        $.ajax({
+          type: "POST",
+          url: "orders-code.php",
+          data: data,
+          success: function (response) {
+            var res = JSON.parse(response);
+            if (res.status == 200) {
+              swal("Success", "Customer added successfully!", "success").then(
+                () => {
+                  $("#addCustomerModal").modal("hide"); // Close modal after saving
+                }
+              );
+            } else if (res.status == 422) {
+              swal(res.message, res.message, "error");
+            } else {
+              swal(res.message, res.message, "error");
+            }
+          },
+        });
+      } else {
+        swal("Enter valid number", "", "warning");
+      }
+    } else {
+      swal("Please fill required fields", "", "warning");
+    }
+  });
 });
