@@ -113,7 +113,7 @@ if(isset($_POST['proceedToPlaceBtn'])){
         else
         {
             $_SESSION['cphone'] = $phone;
-            jsonResponse(404, 'warining', 'Customer Not Found!');
+            jsonResponse(404, 'warning', 'Customer Not Found!');
         }
     }else{
         jsonResponse(500, 'error', 'Something Went Wrong');
@@ -145,6 +145,106 @@ if(isset($_POST['saveCustomerBtn']))
 
     }else{
         jsonResponse(422, 'warning', 'Please fill required fields');
+    }
+}
+
+
+if (isset($_POST['saveOrder'])) {
+    $phone = validate($_SESSION['cphone']);
+    $invoice_no = validate($_SESSION['invoice_no']);
+    $payment_mode = validate($_SESSION['payment_mode']);
+    $order_placed_by_id = $_SESSION['loggedInUser']['user_id'];
+
+    $checkCustomer = mysqli_query($conn, "SELECT * FROM customers WHERE phone='$phone' LIMIT 1");
+
+    if (!$checkCustomer) {
+        jsonResponse(500, 'error', 'Something Went Wrong!');
+        return; // Terminate script
+    }
+
+    if (mysqli_num_rows($checkCustomer) > 0) {
+        $customerData = mysqli_fetch_assoc($checkCustomer);
+
+        if (!isset($_SESSION['productItems'])) {
+            jsonResponse(404, 'warning', 'No Items to place order!');
+            return; // Terminate script
+        }
+
+        $sessionProducts = $_SESSION['productItems'];
+        $totalAmount = 0;
+        foreach ($sessionProducts as $amtItem) {
+            $totalAmount += $amtItem['price'] * $amtItem['quantity'];
+        }
+
+        // Insert into orders table
+        $data = [
+            'customer_id' => $customerData['id'],
+            'tracking_no' => rand(11111, 99999),
+            'invoice_no' => $invoice_no,
+            'total_amount' => $totalAmount,
+            'order_date' => date('Y-m-d'),
+            'order_status' => 'booked',
+            'payment_mode' => $payment_mode,
+            'order_placed_by_id' => $order_placed_by_id,
+        ];
+
+        $result = insert('orders', $data);
+        if (!$result) {
+            jsonResponse(500, 'error', 'Failed to place order!');
+            return; // Terminate script
+        }
+
+        $lastOrderId = mysqli_insert_id($conn);
+
+        foreach ($sessionProducts as $prodItem) {
+            $productId = $prodItem['product_id'];
+            $price = $prodItem['price'];
+            $quantity = $prodItem['quantity']; // Fixed typo
+
+            // Insert order items
+            $dataOrderItem = [
+                'order_id' => $lastOrderId,
+                'product_id' => $productId,
+                'price' => $price,
+                'quantity' => $quantity,
+            ];
+            $orderItemQuery = insert('order_items', $dataOrderItem);
+
+            // Check and update product stock
+            $checkProductQuantityQuery = mysqli_query($conn, "SELECT * FROM products WHERE id='$productId'");
+            if (!$checkProductQuantityQuery) {
+                jsonResponse(500, 'error', 'Failed to fetch product data!');
+                return; // Terminate script
+            }
+
+            $productQtyData = mysqli_fetch_assoc($checkProductQuantityQuery);
+            $totalProductQuantity = $productQtyData['quantity'] - $quantity;
+
+            // Ensure quantity is not negative
+            if ($totalProductQuantity < 0) {
+                jsonResponse(400, 'warning', 'Insufficient stock for product ID: ' . $productId);
+                return; // Terminate script
+            }
+
+            $dataUpdate = ['quantity' => $totalProductQuantity];
+            $updateProductQty = update('products', $productId, $dataUpdate);
+
+            if (!$updateProductQty) {
+                jsonResponse(500, 'error', 'Failed to update product stock!');
+                return; // Terminate script
+            }
+        }
+
+        // Clear session data
+        unset($_SESSION['productItemIds']);
+        unset($_SESSION['productItems']);
+        unset($_SESSION['cphone']);
+        unset($_SESSION['payment_mode']);
+        unset($_SESSION['invoice_no']);
+
+        jsonResponse(200, 'success', 'Order Placed Successfully');
+    } else {
+        jsonResponse(404, 'warning', 'No Customer Found!');
     }
 }
 

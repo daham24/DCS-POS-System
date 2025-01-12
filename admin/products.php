@@ -27,6 +27,8 @@
                 <th>ID</th>
                 <th>Image</th>
                 <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
                 <th>Status</th> 
                 <th>Action</th>
               </tr>
@@ -39,7 +41,9 @@
                   <td>
                     <img src="../<?= $item['image']?>" style="width:50px; height: 50px;" alt="Img">
                   </td>
-                  <td><?= $item['name']?></td>              
+                  <td><?= $item['name']?></td> 
+                  <td><?= $item['price']?></td>  
+                  <td><?= $item['quantity']?></td>           
                   <td>
                     <?php
                       if($item['status'] == 1){

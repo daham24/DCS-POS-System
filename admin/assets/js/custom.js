@@ -107,7 +107,7 @@ $(document).ready(function () {
     });
   });
 
-  // Save customer button click  
+  // Save customer button click
   $(document).on("click", ".saveCustomer", function () {
     var c_name = $("#c_name").val();
     var c_phone = $("#c_phone").val();
@@ -147,5 +147,31 @@ $(document).ready(function () {
     } else {
       swal("Please fill required fields", "", "warning");
     }
+  });
+
+  $(document).on("click", "#saveOrder", function () {
+    $.ajax({
+      type: "POST",
+      url: "orders-code.php",
+      data: { saveOrder: true },
+      success: function (response) {
+        try {
+          var res = JSON.parse(response);
+
+          if (res.status == 200) {
+            swal("Success", "Order placed successfully!", "success");
+            $("#orderPlaceSuccessMessage").text(res.message);
+            $("#orderSuccessModal").modal("show");
+          } else {
+            swal("Error", res.message, res.status_type);
+          }
+        } catch (e) {
+          swal("Error", "Invalid response from server!", "error");
+        }
+      },
+      error: function () {
+        swal("Error", "Failed to connect to server!", "error");
+      },
+    });
   });
 });
