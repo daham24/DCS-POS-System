@@ -56,14 +56,16 @@ if (!isset($_SESSION['productItems'])) {
                         if (mysqli_num_rows($customerQuery) > 0) {
                             $cRowData = mysqli_fetch_assoc($customerQuery);
                             ?>
-                            <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+                            <table style="width: 100%; margin-bottom: 20px; margin-top: 20px; border-collapse: collapse;">
                                 <tbody>
                                   <!-- Header Row -->
                                   <tr>
                                     <td style="text-align: center;" colspan="2">
+                                      <span><img src="../assets/img/png.png" alt="dcs-logo" style="width: auto; height: 80px;"></span>
                                       <h4 style="font-size: 23px; line-height: 30px; margin: 2px;">Dimuthu Cellular Service</h4>
-                                      <p style="font-size: 16px; line-height: 24px; margin: 2px;">Matara Road, Heegoda, Urubokka.</p>
-                                      <p style="font-size: 16px; line-height: 24px; margin: 2px;">077 791 7666</p>
+                                      <p style="font-size: 16px; line-height: 24px; margin: 2px;">319/1A, Urubokka Road, Heegoda.</p>
+                                      <p style="font-size: 16px; line-height: 24px; margin: 2px;">070 691 7666 | 077 791 7666 | 070 391 7666</p>
+                                      <p style="font-size: 16px; line-height: 24px; margin: 2px;">www.dcs.lk | info@dcs.lk</p>
                                     </td>
                                   </tr>
 
@@ -82,6 +84,7 @@ if (!isset($_SESSION['productItems'])) {
                                       <h5 style="font-size: 20px; line-height: 30px; margin: 0;">Invoice Details</h5>
                                       <p style="font-size: 14px; line-height: 20px; margin: 0;">Invoice No.: <?= $invoiceNo ?></p>
                                       <p style="font-size: 14px; line-height: 20px; margin: 0;">Invoice Date: <?= date('d M Y') ?></p>
+                                      <br>
                                       <!-- <p style="font-size: 14px; line-height: 20px; margin: 0;">Address: 1st Main Road, Bangalore, India</p> -->
                                     </td>
                                   </tr>
@@ -144,6 +147,22 @@ if (!isset($_SESSION['productItems'])) {
                             </tr>
                             <tr>
                               <td colspan="5">Payment Mode: <?= $_SESSION['payment_mode']; ?></td>
+                            </tr>
+                            <tr>
+                              <td colspan="5" style="padding-top: 20px;">
+                                  <h5 style="font-size: 20px; margin-bottom: 10px;">Terms and Conditions</h5>
+                                  <p style="font-size: 14px; line-height: 20px; margin: 0;">1. The product is accepted for return or exchange after sale.</p>
+                                  <p style="font-size: 14px; line-height: 20px; margin: 0;">2. The warranty covers manufacturing defects, but does not cover overvoltage, liquid damage, drops, and if the official seal is damaged or removed.</p>
+                                  <p style="font-size: 14px; line-height: 20px; margin: 0;">3. Please note that when a mobile phone with a warranty has a problem, it will not be replaced immediately with a new mobile phone.</p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="5" style="padding-top: 40px; text-align: right;">
+                                <div>
+                                  <p style="margin: 0; font-size: 14px;">_________________________</p>
+                                  <p style="margin: 0; font-size: 14px;">Authorized Signature</p>
+                                </div>
+                              </td>
                             </tr>
                           </tbody>
                         </table>
