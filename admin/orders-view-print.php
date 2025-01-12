@@ -44,9 +44,9 @@
                         <!-- Header Row -->
                         <tr>
                           <td style="text-align: center;" colspan="2">
-                            <h4 style="font-size: 23px; line-height: 30px; margin: 2px;">Company XYZ</h4>
-                            <p style="font-size: 16px; line-height: 24px; margin: 2px;">#555, 1st Street, 3rd Cross, Bangalore, India</p>
-                            <p style="font-size: 16px; line-height: 24px; margin: 2px;">Company XYZ Pvt. Ltd.</p>
+                            <h4 style="font-size: 23px; line-height: 30px; margin: 2px;">Dimuthu Cellular Service</h4>
+                            <p style="font-size: 16px; line-height: 24px; margin: 2px;">Matara Road, Heegoda, Urubokka.</p>
+                            <p style="font-size: 16px; line-height: 24px; margin: 2px;">077 791 7666</p>
                           </td>
                         </tr>
 
@@ -65,7 +65,7 @@
                             <h5 style="font-size: 20px; line-height: 30px; margin: 0;">Invoice Details</h5>
                             <p style="font-size: 14px; line-height: 20px; margin: 0;">Invoice No.: <?= $orderDataRow['invoice_no']; ?></p>
                             <p style="font-size: 14px; line-height: 20px; margin: 0;">Invoice Date: <?= date('d M Y') ?></p>
-                            <p style="font-size: 14px; line-height: 20px; margin: 0;">Address: 1st Main Road, Bangalore, India</p>
+                            <!-- <p style="font-size: 14px; line-height: 20px; margin: 0;">Address: 1st Main Road, Bangalore, India</p> -->
                           </td>
                         </tr>
                       </tbody>
