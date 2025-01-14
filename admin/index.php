@@ -67,8 +67,6 @@
                         }else{
                             echo 'Something Went Wrong!';
                         }
-
-                   
                    ?>
                 </h5>
             </div>
@@ -79,6 +77,34 @@
                 <p class="text-sm mb-0 text-capitalize">Total Orders</p>
                 <h5 class="fw-bold mb-0">
                     <?= getCount('orders'); ?>
+                </h5>
+            </div>
+        </div>
+
+        <!-- New Card for Pending Repair Items -->
+        <div class="col-md-3 mb-3">
+            <div class="card card-body bg-secondary bg-gradient text-white p-3">
+                <p class="text-sm mb-0 text-capitalize">Pending Repair Items</p>
+                <h5 class="fw-bold mb-0">
+                    <?php
+                        $pendingRepairs = mysqli_query($conn, "SELECT * FROM repairs WHERE status = 0"); // Assuming 0 = Pending
+
+                        if ($pendingRepairs) {
+                            echo mysqli_num_rows($pendingRepairs);
+                        } else {
+                            echo "0";
+                        }
+                    ?>
+                </h5>
+            </div>
+        </div>
+
+        <!-- New Card for Total Repairs -->
+        <div class="col-md-3 mb-3">
+            <div class="card card-body bg-secondary bg-gradient text-white p-3">
+                <p class="text-sm mb-0 text-capitalize">Total Repairs</p>
+                <h5 class="fw-bold mb-0">
+                    <?= getCount('repairs'); ?>
                 </h5>
             </div>
         </div>
@@ -98,11 +124,8 @@
                 />
             </div>
         </div>
-        
     </div>
                        
 </div>
-
-
 
 <?php include('includes/footer.php');?>

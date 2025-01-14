@@ -1,5 +1,5 @@
 <?php include('includes/header.php'); ?>
-<div class="container mt-4">
+<div class="ccontainer-fluid px-4 mt-4 mb-4">
     <div class="card shadow-sm">
         <div class="card-header">
             <h4>Add Repair Item</h4>

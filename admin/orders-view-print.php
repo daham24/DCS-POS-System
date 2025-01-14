@@ -1,6 +1,6 @@
 <?php include('includes/header.php');?>
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 mb-4">
     
   <div class="card mt-4 shadow-sm">
       <div class="card-header">
@@ -124,21 +124,27 @@
                           <td colspan="5">Payment Mode: <?= $row['payment_mode']; ?></td>
                         </tr>
                         <tr>
-                              <td colspan="5" style="padding-top: 20px;">
-                                <h5 style="font-size: 20px; margin-bottom: 10px;">Terms and Conditions</h5>
-                                <p style="font-size: 14px; line-height: 20px; margin: 0;">1. The product is accepted for return or exchange after sale.</p>
-                                <p style="font-size: 14px; line-height: 20px; margin: 0;">2. The warranty covers manufacturing defects, but does not cover overvoltage, liquid damage, drops, and if the official seal is damaged or removed.</p>
-                                <p style="font-size: 14px; line-height: 20px; margin: 0;">3. Please note that when a mobile phone with a warranty has a problem, it will not be replaced immediately with a new mobile phone.</p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="5" style="padding-top: 40px; text-align: right;">
-                                <div>
-                                  <p style="margin: 0; font-size: 14px;">_________________________</p>
-                                  <p style="margin: 0; font-size: 14px;">Authorized Signature</p>
-                                </div>
-                              </td>
-                            </tr>
+                            <td colspan="5" style="padding-top: 20px;">
+                              <h5 style="font-size: 20px; margin-bottom: 10px;">Terms and Conditions</h5>
+                              <p style="font-size: 14px; line-height: 20px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
+                              <p style="font-size: 14px; line-height: 20px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
+                              <p style="font-size: 14px; line-height: 20px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" style="padding-top: 80px; text-align: left;">
+                            <div>
+                              <p style="margin: 0; font-size: 14px;">_________________________</p>
+                              <p style="margin: 0; font-size: 14px;">Customer Signature</p>
+                            </div>
+                          </td>
+                          <td colspan="3" style="padding-top: 80px; text-align: right;">
+                            <div>
+                              <p style="margin: 0; font-size: 14px;">_________________________</p>
+                              <p style="margin: 0; font-size: 14px;">Authorized Signature</p>
+                            </div>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   <?php

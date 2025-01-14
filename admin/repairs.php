@@ -75,10 +75,29 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <a href="repairs-edit.php?id=<?= $repair['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                                        <a href="repairs-delete.php?id=<?= $repair['id']; ?>" 
-                                           class="btn btn-danger btn-sm"
-                                           onclick="return confirm('Are you sure you want to delete this repair?');">Delete</a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actionDropdown<?= $repair['id']; ?>" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="actionDropdown<?= $repair['id']; ?>">
+                                                <li>
+                                                    <a class="dropdown-item" href="repairs-edit.php?id=<?= $repair['id']; ?>">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="repairs-delete.php?id=<?= $repair['id']; ?>" 
+                                                    onclick="return confirm('Are you sure you want to delete this repair?');">
+                                                        <i class="fas fa-trash-alt"></i> Delete
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="repairs-view.php?id=<?= $repair['id']; ?>">
+                                                        <i class="fas fa-eye"></i> View
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php } ?>
