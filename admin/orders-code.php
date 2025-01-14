@@ -151,7 +151,29 @@ if(isset($_POST['saveCustomerBtn']))
 
 if (isset($_POST['saveOrder'])) {
     $phone = validate($_SESSION['cphone']);
-    $invoice_no = validate($_SESSION['invoice_no']);
+    // Generate a structured invoice number
+    $yearMonth = date('Y-m'); // Get the current year and month
+    $prefix = 'INV';
+
+    // Query to get the last invoice number for the current month
+    $query = "SELECT invoice_no FROM orders WHERE invoice_no LIKE '$prefix-$yearMonth-%' ORDER BY id DESC LIMIT 1";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        // Extract the last sequence number and increment it
+        $lastNumber = intval(substr($row['invoice_no'], strrpos($row['invoice_no'], '-') + 1));
+        $newNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT); // Pad with leading zeros
+    } else {
+        $newNumber = '001'; // Start with 001 if no previous invoices exist
+    }
+
+    // Generate the invoice number
+    $invoice_no = "$prefix-$yearMonth-$newNumber";
+
+    // Validate the invoice number
+    $invoice_no = validate($invoice_no);
+
     $payment_mode = validate($_SESSION['payment_mode']);
     $order_placed_by_id = $_SESSION['loggedInUser']['user_id'];
 

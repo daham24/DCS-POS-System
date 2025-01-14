@@ -80,7 +80,7 @@
               <input type="number" name="quantity" value="1" class="form-control" />
             </div>  
             <div class="col-md-3 mb-3 text-end">
-              <br>
+              <br/>
               <button type="submit" name="addItem" class="btn btn-primary">Add Item</button>
             </div>
 
@@ -165,7 +165,7 @@
                   <input type="number" id="cphone" class="form-control" value=""/>
                 </div>
                 <div class="col-md-4">
-                  <br>
+                  <br/>
                   <button type="button" class="btn btn-warning w-100 proceedToPlace">Proceed to place order</button>
                 </div>
             </div>

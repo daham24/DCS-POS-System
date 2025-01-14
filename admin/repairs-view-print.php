@@ -74,8 +74,8 @@
                             <thead>
                                 <tr>
                                     <th align="start" style="border-bottom: 1px solid #ccc;" width="15%">Invoice Number</th>
-                                    <th align="start" style="border-bottom: 1px solid #ccc;"width="30%">Item Name</th>
-                                    <th align="start" style="border-bottom: 1px solid #ccc;" >Physical Condition</th>
+                                    <th align="start" style="border-bottom: 1px solid #ccc;" width="30%">Item Name</th>
+                                    <th align="start" style="border-bottom: 1px solid #ccc;">Physical Condition</th>
                                     <th align="start" style="border-bottom: 1px solid #ccc;">Received Items</th>
                                     <th align="start" style="border-bottom: 1px solid #ccc;">Repair Cost (Rs.)</th>
                                 </tr>

@@ -38,7 +38,7 @@
                     $costResult = mysqli_query($conn, $costQuery);
 
                     // Display success message if redirected after saving cost
-                    if (isset($_GET['success']) && $_GET['success'] == 1) {
+                    if (isset($_GET['success']) && $_GET['success'] == 'cost_added') {
                         echo "<div class='alert alert-success'>Repair cost added successfully!</div>";
                     }
 
