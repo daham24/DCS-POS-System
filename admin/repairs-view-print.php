@@ -42,13 +42,13 @@
                         <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
                             <!-- Header Row -->
                             <tr>
-                                <td style="text-align: center;" colspan="2">
-                                    <img src="../assets/img/png.png" alt="dcs-logo" style="width: auto; height: 80px;">
-                                    <h4>Dimuthu Cellular Service</h4>
-                                    <p>319/1A, Urubokka Road, Heegoda.</p>
-                                    <p>070 691 7666 | 077 791 7666 | 070 391 7666</p>
-                                    <p>www.dcs.lk | info@dcs.lk</p>
-                                </td>
+                            <td style="text-align: center;" colspan="2">
+                                <span><img src="../assets/img/png.png" alt="dcs-logo" style="width: auto; height: 80px;"></span>
+                                <h4 style="font-size: 23px; line-height: 30px; margin: 2px;">Dimuthu Cellular Service</h4>
+                                <p style="font-size: 16px; line-height: 24px; margin: 2px;">319/1A, Urubokka Road, Heegoda.</p>
+                                <p style="font-size: 16px; line-height: 24px; margin: 2px;">070 691 7666 | 077 791 7666 | 070 391 7666</p>
+                                <p style="font-size: 16px; line-height: 24px; margin: 2px;">www.dcs.lk | info@dcs.lk</p>
+                            </td>
                             </tr>
 
                             <!-- Customer and Repair Details -->
