@@ -2,6 +2,8 @@
 
 include('includes/header.php');
 
+
+
 // Redirect if 'productItems' session is not set
 if (!isset($_SESSION['productItems'])) {
     echo '<script>window.location.href = "order-create.php"</script>';
@@ -9,6 +11,60 @@ if (!isset($_SESSION['productItems'])) {
 }
 
 ?>
+
+
+<style>
+    @media print {
+        /* Set A5 paper size */
+        @page {
+            size: A5;
+            margin: 10mm;
+        }
+
+        /* Reduce font sizes */
+        body {
+            font-size: 10px;
+            line-height: 1.2;
+        }
+
+        h4, h5 {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin: 2px 0;
+            font-size: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 4px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Remove unnecessary margins for print */
+        .container-fluid {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Hide buttons and non-printable elements */
+        .btn, .no-print {
+            display: none;
+        }
+    }
+</style>
 
 <div class="modal fade" id="orderSuccessModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

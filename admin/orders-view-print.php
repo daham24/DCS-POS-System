@@ -39,16 +39,16 @@
               {
                 $orderDataRow = mysqli_fetch_assoc($orderQueryRes);
                 ?>
-                  <table style="width: 100%; margin-bottom: 20px; margin-top: 20px; border-collapse: collapse;">
+                  <table style="width: 100%; margin-bottom: 20px;  border-collapse: collapse;">
                       <tbody>
                         <!-- Header Row -->
                         <tr>
                           <td style="text-align: center;" colspan="2">
-                            <span><img src="../assets/img/png.png" alt="dcs-logo" style="width: auto; height: 80px;"></span>
-                            <h4 style="font-size: 23px; line-height: 30px; margin: 2px;">Dimuthu Cellular Service</h4>
-                            <p style="font-size: 16px; line-height: 24px; margin: 2px;">319/1A, Urubokka Road, Heegoda.</p>
-                            <p style="font-size: 16px; line-height: 24px; margin: 2px;">070 691 7666 | 077 791 7666 | 070 391 7666</p>
-                            <p style="font-size: 16px; line-height: 24px; margin: 2px;">www.dcs.lk | info@dcs.lk</p>
+                            <span><img src="../assets/img/png.png" alt="dcs-logo" style="width: auto; height: 50px;"></span>
+                            <h4 style="font-size: 18px; line-height: 28px; margin: 2px;">Dimuthu Cellular Service</h4>
+                            <p style="font-size: 14px; line-height: 22px; margin: 2px;">319/1A, Urubokka Road, Heegoda.</p>
+                            <p style="font-size: 14px; line-height: 22px; margin: 2px;">070 691 7666 | 077 791 7666 | 070 391 7666</p>
+                            <p style="font-size: 14px; line-height: 22px; margin: 2px;">www.dcs.lk | info@dcs.lk</p>
                           </td>
                         </tr>
 
@@ -56,17 +56,17 @@
                         <tr>
                           <!-- Customer Details -->
                           <td>
-                            <h5 style="font-size: 20px; line-height: 30px; margin: 0;">Customer Details</h5>
-                            <p style="font-size: 14px; line-height: 20px; margin: 0;">Customer Name: <?= $orderDataRow['name'] ?></p>
-                            <p style="font-size: 14px; line-height: 20px; margin: 0;">Customer Phone No.: <?= $orderDataRow['phone'] ?></p>
-                            <p style="font-size: 14px; line-height: 20px; margin: 0;">Customer Email ID: <?= $orderDataRow['email'] ?></p>
+                            <h5 style="font-size: 14px; line-height: 28px; margin: 0;">Customer Details</h5>
+                            <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Name: <?= $orderDataRow['name'] ?></p>
+                            <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Phone No.: <?= $orderDataRow['phone'] ?></p>
+                            <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Email ID: <?= $orderDataRow['email'] ?></p>
                           </td>
 
                           <!-- Invoice Details -->
                           <td style="text-align: right;">
-                            <h5 style="font-size: 20px; line-height: 30px; margin: 0;">Invoice Details</h5>
-                            <p style="font-size: 14px; line-height: 20px; margin: 0;">Invoice No.: <?= $orderDataRow['invoice_no']; ?></p>
-                            <p style="font-size: 14px; line-height: 20px; margin: 0;">Invoice Date: <?= date('d M Y') ?></p>
+                            <h5 style="font-size: 14px; line-height: 28px; margin: 0;">Invoice Details</h5>
+                            <p style="font-size: 12px; line-height: 18px; margin: 0;">Invoice No.: <?= $orderDataRow['invoice_no']; ?></p>
+                            <p style="font-size: 12px; line-height: 18px; margin: 0;">Invoice Date: <?= date('d M Y') ?></p>
                             <br>
                             <!-- <p style="font-size: 14px; line-height: 20px; margin: 0;">Address: 1st Main Road, Bangalore, India</p> -->
                           </td>
@@ -93,11 +93,11 @@
                     <table style="width:100%;" cellpadding="5">
                       <thead>
                         <tr>
-                          <th align="start" style="border-bottom: 1px solid #ccc;" width="5%">ID</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc;">Product Name</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc;" width="10%">Price</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc;" width="10%">Quantity</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc;" width="15%">Total Price</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="5%">ID</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Product Name</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Price</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Quantity</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="15%">Total Price</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -107,41 +107,41 @@
                         
                         ?>
                         <tr>
-                          <td style="border-bottom: 1px solid #ccc;"><?= $i++; ?></td>
-                          <td style="border-bottom: 1px solid #ccc;"><?= $row['name']; ?></td>
-                          <td style="border-bottom: 1px solid #ccc;"><?= number_format($row['orderItemPrice'], 0); ?></td>
-                          <td style="border-bottom: 1px solid #ccc;"><?= $row['orderItemQuantity']; ?></td>
-                          <td style="border-bottom: 1px solid #ccc; font-weight: bold;">
+                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $i++; ?></td>
+                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['name']; ?></td>
+                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($row['orderItemPrice'], 0); ?></td>
+                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['orderItemQuantity']; ?></td>
+                          <td style="border-bottom: 1px solid #ccc; font-weight: bold; font-size: 14px;">
                             <?= number_format($row['orderItemPrice'] * $row['orderItemQuantity'], 0); ?>
                           </td>
                         </tr>
                         <?php } ?>
                         <tr>
-                          <td colspan="4" align="end" style="font-weight: bold;">Grand Total:</td>
-                          <td colspan="1" style="font-weight: bold;"><?= number_format($row['total_amount'], 0); ?></td>
+                          <td colspan="4" align="end" style="font-weight: bold; font-size: 14px;">Grand Total:</td>
+                          <td colspan="1" style="font-weight: bold; font-size: 14px;"><?= number_format($row['total_amount'], 0); ?></td>
                         </tr>
                         <tr>
-                          <td colspan="5">Payment Mode: <?= $row['payment_mode']; ?></td>
+                          <td colspan="5" style="font-size: 14px;">Payment Mode: <?= $row['payment_mode']; ?></td>
                         </tr>
                         <tr>
                             <td colspan="5" style="padding-top: 20px;">
-                              <h5 style="font-size: 20px; margin-bottom: 10px;">Terms and Conditions</h5>
-                              <p style="font-size: 14px; line-height: 20px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
-                              <p style="font-size: 14px; line-height: 20px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
-                              <p style="font-size: 14px; line-height: 20px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
+                              <h5 style="font-size: 14px; margin-bottom: 10px; ">Terms and Conditions</h5>
+                              <p style="font-size: 12px; line-height: 20px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
+                              <p style="font-size: 12px; line-height: 20px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
+                              <p style="font-size: 12px; line-height: 20px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
                             </td>
                         </tr>
                         <tr>
-                          <td colspan="3" style="padding-top: 80px; text-align: left;">
+                          <td colspan="3" style="padding-top: 40px; text-align: left;">
                             <div>
-                              <p style="margin: 0; font-size: 14px;">_________________________</p>
-                              <p style="margin: 0; font-size: 14px;">Customer Signature</p>
+                              <p style="margin: 0; font-size: 12px;">_________________________</p>
+                              <p style="margin: 0; font-size: 12px;">Customer Signature</p>
                             </div>
                           </td>
                           <td colspan="3" style="padding-top: 80px; text-align: right;">
                             <div>
-                              <p style="margin: 0; font-size: 14px;">_________________________</p>
-                              <p style="margin: 0; font-size: 14px;">Authorized Signature</p>
+                              <p style="margin: 0; font-size: 12px;">_________________________</p>
+                              <p style="margin: 0; font-size: 12px;">Authorized Signature</p>
                             </div>
                           </td>
                         </tr>
