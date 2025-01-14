@@ -89,12 +89,14 @@
             <hr>
             <h1 class="fw-bold text-primary">Welcome <?= $_SESSION['loggedInUser']['name']; ?> !</h1>
             <h3 class="fw-lighter">Have A Nice Day.</h3>
-            <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/654a26b17a81e6ce82d734845f2c366cfee884002396d68461a460731a7ce5a7?apiKey=2758efc56d724d1aacd00d329c35c80b&"
-                style="width: 100vw; height:50vh; overflow:hidden; "
-                alt="Dimuthu Cellular Service welcome image"
-            />
+            <div class="image-container">
+                <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/654a26b17a81e6ce82d734845f2c366cfee884002396d68461a460731a7ce5a7?apiKey=2758efc56d724d1aacd00d329c35c80b&"
+                    alt="Dimuthu Cellular Service welcome image"
+                    class="img-fluid"
+                />
+            </div>
         </div>
         
     </div>

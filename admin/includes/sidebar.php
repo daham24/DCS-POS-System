@@ -54,6 +54,21 @@
                                     <a class="nav-link <?= $page == 'products.php' ? 'active':''; ?>" href="products.php">View Products</a>
                                 </nav>
                             </div>
+
+                            <!-- Repair Items Section -->
+                            <a class="nav-link <?= ($page == 'repairs-create.php') || ($page == 'repairs.php') ? 'collapse active':'collapsed'; ?>" href="#" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#collapseRepair" aria-expanded="false" aria-controls="collapseRepair">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tools"></i></div>
+                                Repair Items
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse <?= ($page == 'repairs-create.php') || ($page == 'repairs.php') ? 'show':''; ?>" id="collapseRepair" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link <?= $page == 'repairs-create.php' ? 'active':''; ?>" href="repairs-create.php">Add Repair Item</a>
+                                    <a class="nav-link <?= $page == 'repairs.php' ? 'active':''; ?>" href="repairs.php">View Repair Items</a>
+                                </nav>
+                            </div>
                             
                             <div class="sb-sidenav-menu-heading">Manage Users</div>
 

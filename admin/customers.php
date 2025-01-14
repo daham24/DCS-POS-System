@@ -1,25 +1,45 @@
 <?php include('includes/header.php');?>
 
 <div class="container-fluid px-4">
-    
+
   <div class="card mt-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="mb-0">Customers
-          <a href="customers-create.php" class="btn btn-primary float-end">Add Customer</a>
-        </h4>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Customers</h4>
+        <!-- Search Form -->
+        <form class="d-flex" method="GET" action="">
+          <input 
+            type="text" 
+            name="search" 
+            class="form-control me-2" 
+            placeholder="Search by phone number..." 
+            value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
+          >
+          <button type="submit" class="btn btn-dark">Search</button>
+        </form>
+        <a href="customers-create.php" class="btn btn-primary">Add Customer</a>
       </div>
       <div class="card-body">
         <?php alertMessage(); ?> 
 
         <?php
-              $customers = getAll('customers');
-              if(!$customers){
-                echo '<h4>Something Went Wrong!</h4>';
-                return false;
-              }
-              if(mysqli_num_rows($customers) > 0)
-              {
-              ?>
+          // Fetch customers based on search
+          $searchQuery = isset($_GET['search']) ? validate($_GET['search']) : '';
+
+          $query = "SELECT * FROM customers WHERE 1=1";
+
+          if($searchQuery) {
+            $query .= " AND phone LIKE '%$searchQuery%'";
+          }
+
+          $customers = mysqli_query($conn, $query);
+
+          if(!$customers){
+            echo '<h4>Something Went Wrong!</h4>';
+            return false;
+          }
+          if(mysqli_num_rows($customers) > 0)
+          {
+        ?>
         <div class="table-responsive">
           <table class="table table-striped table-bordered">
             <thead>
@@ -73,7 +93,7 @@
                   <h4 class="mb-0">No Record Found</h4>
                 <?php
               }
-              ?>
+        ?>
       </div>
   </div>
   

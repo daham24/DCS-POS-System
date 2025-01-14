@@ -322,4 +322,57 @@ if(isset($_POST['updateCustomer']))
 }
 
 
+
+if (isset($_POST['updateRepair'])) {
+  // Validate input data
+  $repairId = validate($_POST['repairId']);
+  $item_name = validate($_POST['item_name']);
+  $customer_id = validate($_POST['customer_id']);
+  $description = validate($_POST['description']);
+  $status = isset($_POST['status']) ? 1 : 0;
+
+  // Handle checkbox fields (physical_condition and received_items)
+  $physical_condition = isset($_POST['physical_condition']) ? implode(', ', $_POST['physical_condition']) : '';
+  $received_items = isset($_POST['received_items']) ? implode(', ', $_POST['received_items']) : '';
+
+  // Ensure required fields are not empty
+  if ($item_name != '' && $customer_id != '' && $description != '') {
+      // Check if the selected customer exists
+      $customerCheck = mysqli_query($conn, "SELECT * FROM customers WHERE id='$customer_id'");
+      if ($customerCheck) {
+          if (mysqli_num_rows($customerCheck) == 0) {
+              redirect('repairs-edit.php?id=' . $repairId, 'Selected customer does not exist.');
+              return;
+          }
+      } else {
+          redirect('repairs-edit.php?id=' . $repairId, 'Error validating customer.');
+          return;
+      }
+
+      // Prepare data to update
+      $data = [
+          'item_name' => $item_name,
+          'customer_id' => $customer_id,
+          'description' => $description,
+          'physical_condition' => $physical_condition,
+          'received_items' => $received_items,
+          'status' => $status
+      ];
+
+      // Call the update function
+      $result = update('repairs', $repairId, $data);
+
+      // Redirect based on result
+      if ($result) {
+          redirect('repairs-edit.php?id=' . $repairId, 'Repair item updated successfully!');
+      } else {
+          redirect('repairs-edit.php?id=' . $repairId, 'Something went wrong.');
+      }
+  } else {
+      redirect('repairs-edit.php?id=' . $repairId, 'Please fill in all required fields.');
+  }
+}
+
+
+
 ?>
