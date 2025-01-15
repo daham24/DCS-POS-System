@@ -202,3 +202,4 @@ function downloadPDF(invoiceNo) {
     windowWidth: 650,
   });
 }
+

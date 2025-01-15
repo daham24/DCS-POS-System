@@ -1,13 +1,22 @@
 <?php include('includes/header.php');?>
 
 <div class="container-fluid px-4">
-    
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="mt-4 fw-bold">Dashboard</h1>
-            <?php alertMessage(); ?>
-        </div>
 
+    <div class="row">
+        <!-- Dashboard Title -->
+        <div class="col-md-12 d-flex justify-content-between align-items-center">
+            <h1 class="mt-4 fw-bold">Dashboard</h1>
+            <!-- Live Clock -->
+            <div id="live-clock" style="font-size: 18px; font-weight: bold; color: #333; margin-top: 10px;">
+                <!-- JavaScript will update this -->
+            </div>
+        </div>
+        
+        <?php alertMessage(); ?>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="row">
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-dark bg-gradient text-white p-3">
                 <p class="text-sm mb-0 text-capitalize">Total Category</p>
@@ -110,22 +119,40 @@
         </div>
     </div>
 
+    <!-- Welcome Section -->
     <div class="row">
         <div class="col-md-12">
             <hr>
-            <h1 class="fw-bold text-primary">Welcome <?= $_SESSION['loggedInUser']['name']; ?> !</h1>
+            <h1 class="fw-bold welome-tag">Welcome <?= $_SESSION['loggedInUser']['name']; ?> !</h1>
             <h3 class="fw-lighter">Have A Nice Day.</h3>
             <div class="image-container">
                 <img
                     loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/654a26b17a81e6ce82d734845f2c366cfee884002396d68461a460731a7ce5a7?apiKey=2758efc56d724d1aacd00d329c35c80b&"
+                    src="../assets/img/mainBanner.jpg"
                     alt="Dimuthu Cellular Service welcome image"
                     class="img-fluid"
                 />
             </div>
         </div>
     </div>
-                       
 </div>
+
+<!-- JavaScript for Live Clock -->
+<script>
+  function updateClock() {
+    const clockElement = document.getElementById('live-clock');
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    clockElement.innerHTML = `${hours}:${minutes}:${seconds}`;
+  }
+
+  // Update clock every second
+  setInterval(updateClock, 1000);
+
+  // Initialize clock
+  updateClock();
+</script>
 
 <?php include('includes/footer.php');?>

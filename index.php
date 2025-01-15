@@ -1,23 +1,27 @@
 <?php include("includes/header.php");?>
 
-<div class="welcome-container">
+<div class="welcome-container" style="position: relative; overflow: hidden; width: 100%; height: 50vh;">
   <h1 class="welcome-title">Dimuthu Cellular Service</h1>
   <p class="welcome-description">
     Body text for whatever you'd like to say. Add main takeaway points, quotes,
     anecdotes, or even a very very short story.
   </p>
   <div class="button-container">
-    <button class="login-button" tabindex="0"><a style="color: white;" href="login.php">Login</a></button>
+    <button class="login-button" tabindex="0">
+      <a style="color: white;" href="login.php">Login</a>
+    </button>
   </div>
+</div>
+
+<!-- Footer Image -->
+<div class="footer-image-container" style="width: 100%; position: relative; height: 50vh;  ">
   <img
     loading="lazy"
-    src="https://cdn.builder.io/api/v1/image/assets/TEMP/654a26b17a81e6ce82d734845f2c366cfee884002396d68461a460731a7ce5a7?apiKey=2758efc56d724d1aacd00d329c35c80b&"
-    class="welcome-image"
-    alt="Dimuthu Cellular Service welcome image"
+    src="assets/img/welcomeBanner.jpg"
+    class="footer-image welcome-image"
+    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; object-fit: cover;"
+    alt="Dimuthu Cellular Service Footer Image"
   />
 </div>
 
 <?php include("includes/footer.php");?>
-
-
-   

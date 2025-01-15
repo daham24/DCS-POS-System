@@ -39,7 +39,7 @@
               {
                 $orderDataRow = mysqli_fetch_assoc($orderQueryRes);
                 ?>
-                  <table style="width: 100%; margin-bottom: 20px;  border-collapse: collapse;">
+                  <table style="width: 100%;   border-collapse: collapse;">
                       <tbody>
                         <!-- Header Row -->
                         <tr>
@@ -123,30 +123,33 @@
                         <tr>
                           <td colspan="5" style="font-size: 14px;">Payment Mode: <?= $row['payment_mode']; ?></td>
                         </tr>
+                      </tbody>
+                      <tfoot>
+                         <!-- Terms and Conditions -->
                         <tr>
                             <td colspan="5" style="padding-top: 20px;">
-                              <h5 style="font-size: 14px; margin-bottom: 10px; ">Terms and Conditions</h5>
-                              <p style="font-size: 12px; line-height: 20px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
-                              <p style="font-size: 12px; line-height: 20px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
-                              <p style="font-size: 12px; line-height: 20px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
+                              <h5 style="font-size: 12px; margin-bottom: 5px;">Terms and Conditions</h5>
+                              <p style="font-size: 8px; line-height: 16px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
+                              <p style="font-size: 8px; line-height: 16px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
+                              <p style="font-size: 8px; line-height: 16px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
                             </td>
                         </tr>
-                        <tr>
-                          <td colspan="3" style="padding-top: 40px; text-align: left;">
-                            <div>
-                              <p style="margin: 0; font-size: 12px;">_________________________</p>
-                              <p style="margin: 0; font-size: 12px;">Customer Signature</p>
-                            </div>
-                          </td>
-                          <td colspan="3" style="padding-top: 80px; text-align: right;">
-                            <div>
-                              <p style="margin: 0; font-size: 12px;">_________________________</p>
-                              <p style="margin: 0; font-size: 12px;">Authorized Signature</p>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
+                      </tfoot>
                     </table>
+
+                   
+
+                    <!-- Signatures -->
+                    <div style="margin-top: 50px; display: flex; justify-content: space-between;">
+                        <div style="text-align: center; font-size: 12px; line-height: 12px; margin: 0;">
+                            <p>_________________________</p>
+                            <p>Customer Signature</p>
+                        </div>
+                        <div style="text-align: center; font-size: 12px; line-height: 12px; margin: 0;">
+                            <p>_________________________</p>
+                            <p>Authorized Signature</p>
+                        </div>
+                    </div>
                   <?php
                 }
               }else

@@ -41,7 +41,7 @@ if(isset($_SESSION['loggedIn'])){
         </div>
       </div>
       <div class="image-column">
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d37b54890b4d30fc384399c3b521354cd6f40202dd03a51326663e4b303abd8b?placeholderIfAbsent=true&apiKey=2758efc56d724d1aacd00d329c35c80b" alt="" class="login-image" />
+        <img src="assets/img/loginBanner.jpg" alt="" class="login-image" />
       </div>
     </div>
   </div>
