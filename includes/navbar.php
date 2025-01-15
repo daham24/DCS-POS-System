@@ -15,7 +15,9 @@
         </li>
         
         <?php if(isset($_SESSION['loggedIn'])) : ?>
-        
+        <li class="nav-item">
+        <a class="nav-link active" href="admin/index.php">Dashboard</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#"><?= $_SESSION['loggedInUser']['name'];?></a>
         </li>
@@ -25,6 +27,7 @@
               style="background-color: rgba(44, 44, 44, 1); border: rgba(44, 44, 44, 1);" 
               href="logout.php">Logout
           </a>
+
         </li>
 
         <?php else: ?>
