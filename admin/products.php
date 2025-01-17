@@ -63,6 +63,8 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
+                <th>Barcode</th>
+                <th>Discount (%)</th>
                 <th>Status</th> 
                 <th>Action</th>
               </tr>
@@ -77,7 +79,9 @@
                   </td>
                   <td><?= $item['name']?></td> 
                   <td><?= $item['price']?></td>  
-                  <td><?= $item['quantity']?></td>           
+                  <td><?= $item['quantity']?></td>
+                  <td><?= $item['barcode']?></td> <!-- Display barcode -->
+                  <td><?= $item['discount']?></td> <!-- Display discount -->
                   <td>
                     <?php
                       if($item['status'] == 1){

@@ -73,6 +73,14 @@
             <input type="text" name="quantity" required value="<?= htmlspecialchars($product['data']['quantity']); ?>" class="form-control" />
           </div>
           <div class="col-md-4 mb-3">
+            <label for="">Barcode *</label>
+            <input type="text" name="barcode" required value="<?= htmlspecialchars($product['data']['barcode']); ?>" class="form-control" />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="">Discount (%)</label>
+            <input type="number" step="0.01" name="discount" value="<?= htmlspecialchars($product['data']['discount']); ?>" class="form-control" />
+          </div>
+          <div class="col-md-4 mb-3">
             <label for="">Image</label>
             <input type="file" name="image" class="form-control" />
             <img src="../<?= htmlspecialchars($product['data']['image']); ?>" style="width: 40px; height:40px;" alt="Img" />

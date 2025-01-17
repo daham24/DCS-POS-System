@@ -150,7 +150,9 @@ if(isset($_POST['saveProduct']))
   $description = validate($_POST['description']);
   $price = validate($_POST['price']);
   $quantity = validate($_POST['quantity']);
-  $status = isset($_POST['status']) == true ? 1:0;
+  $barcode = validate($_POST['barcode']); // New field
+  $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0; // New field with default
+  $status = isset($_POST['status']) == true ? 1 : 0;
 
   if($_FILES['image']['size'] > 0)
   {
@@ -166,19 +168,22 @@ if(isset($_POST['saveProduct']))
     $finalImage = '';
   }
 
-
   $data = [
     'category_id' => $category_id,
     'name' => $name,
     'description' => $description,
     'price' => $price,
     'quantity' => $quantity,
+    'barcode' => $barcode,  // Adding barcode
+    'discount' => $discount, // Adding discount
     'image' => $finalImage,
     'status' => $status
   ];
+
   $result = insert('products', $data);
+
   if($result){
-    redirect('products.php', 'Category Created Successfuly! ');
+    redirect('products.php', 'Product Created Successfully! ');
   }else{
     redirect('products-create.php', 'Something Went Wrong! ');
   }
@@ -198,7 +203,9 @@ if(isset($_POST['updateProduct']))
   $description = validate($_POST['description']);
   $price = validate($_POST['price']);
   $quantity = validate($_POST['quantity']);
-  $status = isset($_POST['status']) == true ? 1:0;
+  $barcode = validate($_POST['barcode']); // New field
+  $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0; // New field with default
+  $status = isset($_POST['status']) == true ? 1 : 0;
 
   if($_FILES['image']['size'] > 0)
   {
@@ -219,24 +226,24 @@ if(isset($_POST['updateProduct']))
     $finalImage = $productData['data']['image'];
   }
 
-
   $data = [
     'category_id' => $category_id,
     'name' => $name,
     'description' => $description,
     'price' => $price,
     'quantity' => $quantity,
+    'barcode' => $barcode,  // Adding barcode
+    'discount' => $discount, // Adding discount
     'image' => $finalImage,
     'status' => $status
   ];
   $result = update('products', $product_id, $data);
   if($result){
-    redirect('products-edit.php?id='.$product_id, 'Category Updated Successfuly! ');
+    redirect('products-edit.php?id='.$product_id, 'Product Updated Successfully! ');
   }else{
     redirect('products-edit.php?id='.$product_id, 'Something Went Wrong! ');
   }
 }
-
 
 if(isset($_POST['saveCustomer']))
 {
