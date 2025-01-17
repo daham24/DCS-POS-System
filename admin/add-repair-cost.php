@@ -4,13 +4,15 @@ include('../config/dbCon.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $repairId = intval($_POST['repair_id']);
     $repairCost = floatval($_POST['repair_cost']);
+    $advancedPayment = floatval($_POST['advanced_payment'] ?? 0); // Fetch advanced payment, default to 0 if not provided
 
-    if ($repairId > 0 && $repairCost > 0) {
+    if ($repairId > 0 && $repairCost >= 0 && $advancedPayment >= 0) {
         $invoiceNumber = 'INV-' . uniqid(); // Generate a unique invoice number
 
+        // Insert into the database
         $query = "
-            INSERT INTO repair_orders (repair_id, invoice_number, repair_cost, created_at, updated_at)
-            VALUES ($repairId, '$invoiceNumber', $repairCost, NOW(), NOW())
+            INSERT INTO repair_orders (repair_id, invoice_number, repair_cost, advanced_payment, created_at, updated_at)
+            VALUES ($repairId, '$invoiceNumber', $repairCost, $advancedPayment, NOW(), NOW())
         ";
 
         if (mysqli_query($conn, $query)) {

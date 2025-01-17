@@ -4,7 +4,7 @@
     
   <div class="card mt-4 shadow-sm">
       <div class="card-header">
-        <h4 class="mb-0">Edit Admin
+        <h4 class="mb-0">Edit Admin/Staff
           <a href="admins.php" class="btn btn-danger float-end">Back</a>
         </h4>
       </div>
@@ -49,12 +49,19 @@
                           <input type="email" name="email" required value="<?= $adminData['data']['email']; ?>" class="form-control"/>
                         </div>
                         <div class="col-md-6 mb-3">
-                          <label for="">Password *</label>
-                          <input type="password" name="password" class="form-control"/>
+                          <label for="">Password</label>
+                          <input type="password" name="password" class="form-control" placeholder="Leave blank to keep current password"/>
                         </div>
                         <div class="col-md-6 mb-3">
                           <label for="">Phone Number *</label>
                           <input type="number" name="phone" required value="<?= $adminData['data']['phone']; ?>" class="form-control"/>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="">Role *</label>
+                          <select name="role" required class="form-select">
+                            <option value="admin" <?= $adminData['data']['role'] == 'admin' ? 'selected' : ''; ?>>Admin</option>
+                            <option value="staff" <?= $adminData['data']['role'] == 'staff' ? 'selected' : ''; ?>>Staff</option>
+                          </select>
                         </div>
                         <div class="col-md-3 mb-3">
                           <label for="">Is Ban</label>

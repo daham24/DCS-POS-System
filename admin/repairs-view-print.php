@@ -33,7 +33,7 @@
 
                         // Fetch invoice details
                         $orderQuery = "
-                            SELECT invoice_number, repair_cost
+                            SELECT invoice_number, repair_cost, advanced_payment
                             FROM repair_orders
                             WHERE repair_id = $repairId
                         ";
@@ -78,36 +78,53 @@
                                     <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="30%">Item Name</th>
                                     <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Physical Condition</th>
                                     <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Received Items</th>
+                                    <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Advanced Payment (Rs.)</th>
                                     <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Repair Cost (Rs.)</th>
+                                    
+                                    
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
+                            <?php
                                 $grandTotal = 0;
+                                $totalAdvanced = 0; // Initialize totalAdvanced to 0
                                 if ($orderResult && mysqli_num_rows($orderResult) > 0) {
                                     while ($order = mysqli_fetch_assoc($orderResult)) {
-                                        $grandTotal += $order['repair_cost'];
+                                        $repairCost = floatval($order['repair_cost'] ?? 0); // Ensure numeric value
+                                        $advancedPayment = floatval($order['advanced_payment'] ?? 0); // Ensure numeric value
+                                        $grandTotal += $repairCost; // Increment grand total
+                                        $totalAdvanced += $advancedPayment; // Increment total advanced payment
                                         ?>
                                         <tr>
-                                            <td  style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($order['invoice_number']); ?></td>
-                                            <td  style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($repairData['item_name']); ?></td>
-                                            <td  style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($repairData['physical_condition']); ?></td>
-                                            <td  style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($repairData['received_items']); ?></td>
-                                            <td  style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($order['repair_cost'], 2); ?></td>
+                                            <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($order['invoice_number']); ?></td>
+                                            <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($repairData['item_name']); ?></td>
+                                            <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($repairData['physical_condition']); ?></td>
+                                            <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= htmlspecialchars($repairData['received_items']); ?></td>
+                                            <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($advancedPayment, 2); ?></td>
+                                            <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($repairCost, 2); ?></td>
+                                           
                                         </tr>
                                         <?php
                                     }
                                 } else {
                                     ?>
                                     <tr>
-                                        <td colspan="5" style="text-align: center;">No invoice details found.</td>
+                                        <td colspan="6" style="text-align: center;">No invoice details found.</td>
                                     </tr>
                                     <?php
                                 }
                                 ?>
                                 <tr>
-                                    <td colspan="4" align="end" style="font-weight: bold; font-size: 14px; text-align:right;">Grand Total</td>
-                                    <td colspan="1" style="font-weight: bold;"><?= number_format($grandTotal, 2); ?></td>
+                                    <td colspan="5" align="end" style="font-weight: bold; font-size: 14px; text-align:right;">Grand Total</td>
+                                    <td colspan="2" style="font-weight: bold;"><?= number_format($grandTotal, 2); ?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" align="end" style="font-weight: bold; font-size: 14px; text-align:right;">Total Advanced Payment</td>
+                                    <td colspan="2" style="font-weight: bold;"><?= number_format($totalAdvanced, 2); ?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" align="end" style="font-weight: bold; font-size: 14px; text-align:right;">Outstanding Amount</td>
+                                    <td colspan="2" style="font-weight: bold;"><?= number_format($grandTotal - $totalAdvanced, 2); ?></td>
                                 </tr>
                             </tbody>
                         </table>

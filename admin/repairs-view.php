@@ -88,19 +88,27 @@
                                 <th>Repair Cost (Rs.)</th>
                                 <td><?= number_format($costData['repair_cost'], 2); ?></td>
                             </tr>
+                            <tr>
+                                <th>Advanced Payment (Rs.)</th>
+                                <td><?= number_format($costData['advanced_payment'] ?? 0, 2); ?></td>
+                            </tr>
                         </table>
                         <?php
                     } else {
                         // If cost is not added, show the form
                         ?>
                         <div class="alert alert-warning">
-                            No repair cost added for this repair. Please add the cost below.
+                            No repair cost added for this repair. Please add the cost and advanced payment below.
                         </div>
                         <form action="add-repair-cost.php" method="POST">
                             <input type="hidden" name="repair_id" value="<?= $repairId ?>">
                             <div class="form-group mb-3">
                                 <label for="repair_cost">Enter Repair Cost (Rs.):</label>
                                 <input type="number" step="0.01" name="repair_cost" id="repair_cost" class="form-control" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="advanced_payment">Enter Advanced Payment (Rs.):</label>
+                                <input type="number" step="0.01" name="advanced_payment" id="advanced_payment" class="form-control">
                             </div>
                             <button type="submit" class="btn btn-success">Save Cost</button>
                         </form>

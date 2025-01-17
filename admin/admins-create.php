@@ -4,7 +4,7 @@
     
   <div class="card mt-4 shadow-sm">
       <div class="card-header">
-        <h4 class="mb-0">Add Admin
+        <h4 class="mb-0">Add Admin/Staff
           <a href="admins-create.php" class="btn btn-primary float-end">Back</a>
         </h4>
       </div>
@@ -27,6 +27,13 @@
             <div class="col-md-6 mb-3">
               <label for="">Phone Number *</label>
               <input type="number" name="phone" required class="form-control"/>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="">Role *</label>
+              <select name="role" required class="form-select">
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+              </select>
             </div>
             <div class="col-md-3 mb-3">
               <label for="">Is Ban</label>

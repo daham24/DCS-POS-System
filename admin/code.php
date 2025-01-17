@@ -8,9 +8,10 @@ if(isset($_POST['saveAdmin']))
   $email = validate($_POST['email']);
   $password = validate($_POST['password']);
   $phone = validate($_POST['phone']);
-  $is_ban = isset($_POST['is_ban']) == true ? 1:0;
+  $role = validate($_POST['role']); // New role field
+  $is_ban = isset($_POST['is_ban']) == true ? 1 : 0;
 
-  if($name != '' && $email != '' && $password != ''){
+  if($name != '' && $email != '' && $password != '' && $role != ''){
 
     $emailCheck = mysqli_query($conn, "SELECT * FROM admins WHERE email='$email' ");
 
@@ -27,11 +28,12 @@ if(isset($_POST['saveAdmin']))
       'email' => $email,
       'password' => $bcrypt_password,
       'phone' => $phone,
+      'role' => $role, // Add role to the data array
       'is_ban' => $is_ban
     ];
     $result = insert('admins', $data);
     if($result){
-      redirect('admins.php', 'Admin Created Successfuly! ');
+      redirect('admins.php', 'Admin Created Successfully! ');
     }else{
       redirect('admins-create.php', 'Something Went Wrong! ');
     }
@@ -41,6 +43,7 @@ if(isset($_POST['saveAdmin']))
   }
 
 }
+
 
 if (isset($_POST['updateAdmin'])) {
 
@@ -58,6 +61,7 @@ if (isset($_POST['updateAdmin'])) {
   $email = validate($_POST['email']);
   $password = validate($_POST['password']);
   $phone = validate($_POST['phone']);
+  $role = validate($_POST['role']); // New role field
   $is_ban = isset($_POST['is_ban']) ? 1 : 0;
 
   $EmailCheckQuery = "SELECT * FROM admins WHERE email = '$email' AND id!= '$adminID'";
@@ -75,13 +79,14 @@ if (isset($_POST['updateAdmin'])) {
   $hashedPassword = $password !== '' ? password_hash($password, PASSWORD_BCRYPT) : $adminData['data']['password'];
 
   // Check for required fields
-  if ($name !== '' && $email !== '') {
+  if ($name !== '' && $email !== '' && $role !== '') {
     // Prepare data for update
     $data = [
       'name' => $name,
       'email' => $email,
       'password' => $hashedPassword,
       'phone' => $phone,
+      'role' => $role, // Include role in the update
       'is_ban' => $is_ban
     ];
 
