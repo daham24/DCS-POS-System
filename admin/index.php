@@ -1,5 +1,32 @@
 <?php include('includes/header.php');?>
 
+<?php
+// Set the trial period expiry date
+$expiryDate = '2025-02-15'; // Update this date as needed
+$currentDate = date('Y-m-d');
+
+if ($currentDate > $expiryDate) {
+    // Redirect to an expired page or stop the application
+    echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Trial Expired',
+                text: 'Your trial period has ended. Please contact support to activate the application.',
+                footer: '<a href=\"mailto:support@yourdomain.com\">Contact Support</a>',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                confirmButtonText: 'Close'
+            }).then(() => {
+                window.location.href = '../index.php'; // Optional: Redirect to your website or info page
+            });
+        </script>
+    ";
+    exit; // Stop further execution
+}
+?>
+
 <div class="container-fluid px-4">
 
     <div class="row">
