@@ -53,7 +53,7 @@
                 <input type="text" name="barcode" id="barcode" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="discount">Discount (%)</label>
+                <label for="discount">Discount</label>
                 <input type="number" step="0.01" name="discount" id="discount" class="form-control">
             </div>
             <div class="col-md-4 mb-3">

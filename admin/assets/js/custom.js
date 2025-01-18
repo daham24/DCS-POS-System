@@ -1,6 +1,7 @@
 $(document).ready(function () {
   alertify.set("notifier", "position", "top-right");
 
+  // Increment Quantity
   $(document).on("click", ".increment", function () {
     var $quantityInput = $(this).closest(".qtyBox").find(".qty");
     var productId = $(this).closest(".qtyBox").find(".prodId").val();
@@ -8,11 +9,11 @@ $(document).ready(function () {
 
     if (!isNaN(currentValue)) {
       var qtyVal = currentValue + 1;
-      $quantityInput.val(qtyVal);
-      quantityIncDec(productId, qtyVal);
+      updateQuantity(productId, qtyVal, $quantityInput);
     }
   });
 
+  // Decrement Quantity
   $(document).on("click", ".decrement", function () {
     var $quantityInput = $(this).closest(".qtyBox").find(".qty");
     var productId = $(this).closest(".qtyBox").find(".prodId").val();
@@ -20,12 +21,12 @@ $(document).ready(function () {
 
     if (!isNaN(currentValue) && currentValue > 1) {
       var qtyVal = currentValue - 1;
-      $quantityInput.val(qtyVal);
-      quantityIncDec(productId, qtyVal);
+      updateQuantity(productId, qtyVal, $quantityInput);
     }
   });
 
-  function quantityIncDec(prodId, qty) {
+  // Update Quantity Function
+  function updateQuantity(prodId, qty, $quantityInput) {
     $.ajax({
       type: "POST",
       url: "orders-code.php",
@@ -36,16 +37,25 @@ $(document).ready(function () {
       },
       success: function (response) {
         var res = JSON.parse(response);
-        // console.log(res);
 
         if (res.status == 200) {
-          // window.location.reload();
-          $("#productArea").load(" #productContent");
+          // Update only the affected row and grand total
+          $quantityInput.val(qty); // Update quantity
+          $quantityInput
+            .closest("tr")
+            .find("td:nth-child(5)") // Update the Total Price column
+            .text(res.newTotalPrice);
+
+          // Update Grand Total
+          $("#grandTotal").text(res.grandTotal);
+
           alertify.success(res.message);
         } else {
-          $("#productArea").load(" #productContent");
           alertify.error(res.message);
         }
+      },
+      error: function () {
+        alertify.error("Failed to update quantity. Please try again.");
       },
     });
   }

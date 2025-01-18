@@ -64,7 +64,7 @@
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Barcode</th>
-                <th>Discount (%)</th>
+                <th>Discount</th>
                 <th>Status</th> 
                 <th>Action</th>
               </tr>
