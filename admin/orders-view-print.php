@@ -26,7 +26,7 @@
                 <?php
               }
 
-              $orderQuery = "SELECT o.*, c.* FROM orders o, customers c 
+              $orderQuery = "SELECT o.*, c.*, o.imei_code, o.warrenty_period  FROM orders o, customers c 
                               WHERE c.id=o.customer_id AND tracking_no='$trackingNo' LIMIT 1";
               $orderQueryRes = mysqli_query($conn, $orderQuery);
               if(!$orderQueryRes)
@@ -60,6 +60,7 @@
                             <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Name: <?= $orderDataRow['name'] ?></p>
                             <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Phone No.: <?= $orderDataRow['phone'] ?></p>
                             <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Email ID: <?= $orderDataRow['email'] ?></p>
+                            <br><br>
                           </td>
 
                           <!-- Invoice Details -->
@@ -67,6 +68,8 @@
                             <h5 style="font-size: 14px; line-height: 28px; margin: 0;">Invoice Details</h5>
                             <p style="font-size: 12px; line-height: 18px; margin: 0;">Invoice No.: <?= $orderDataRow['invoice_no']; ?></p>
                             <p style="font-size: 12px; line-height: 18px; margin: 0;">Invoice Date: <?= date('d M Y') ?></p>
+                            <p style="font-size: 12px; line-height: 18px; margin: 0;">IMEI No: <?= $orderDataRow['imei_code']; ?></p>
+                            <p style="font-size: 12px; line-height: 18px; margin: 0;">Warrenty Period: <?= $orderDataRow['warrenty_period']; ?></p>
                             <br>
                             <!-- <p style="font-size: 14px; line-height: 20px; margin: 0;">Address: 1st Main Road, Bangalore, India</p> -->
                           </td>
@@ -81,56 +84,55 @@
                 return false;
               }
 
-              $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, o.*, oi.*, p.*, o.imei_code, o.warrenty_period 
-                                  FROM orders o, order_items oi, products p
-                                  WHERE oi.order_id = o.id AND p.id = oi.product_id AND o.tracking_no = '$trackingNo' ";
 
-              $orderItemQueryRes = mysqli_query($conn, $orderItemQuery);  
-              if($orderItemQueryRes)
-              {
-                if(mysqli_num_rows($orderItemQueryRes) > 0)
-                {
-                  ?>
-                    <table style="width:100%;" cellpadding="5">
+              $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, p.discount as orderItemDiscount, o.*, oi.*, p.*
+              FROM orders o, order_items oi, products p
+              WHERE oi.order_id = o.id AND p.id = oi.product_id AND o.tracking_no = '$trackingNo' ";
+
+                      $orderItemQueryRes = mysqli_query($conn, $orderItemQuery);  
+                      if ($orderItemQueryRes) {
+                      if (mysqli_num_rows($orderItemQueryRes) > 0) {
+                      ?>
+                      <table style="width:100%;" cellpadding="5">
                       <thead>
                         <tr>
                           <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="5%">ID</th>
                           <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Product Name</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">IMEI No.</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Warranty Period</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Price</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Quantity</th>
-                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="15%">Total Price</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Price (Rs.)</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Discount (Rs.)</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Quantity</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Total Price (Rs.)</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php 
-                        $i = 1;
-                        foreach($orderItemQueryRes as $key => $row) {
-                        
+                          $i = 1;
+                          $grandTotal = 0; // Initialize grand total
+                          foreach ($orderItemQueryRes as $key => $row) {
+                          $totalPrice = ($row['orderItemPrice'] - $row['orderItemDiscount']) * $row['orderItemQuantity'];
+                          $grandTotal += $totalPrice; // Add to grand total
                         ?>
                         <tr>
                           <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $i++; ?></td>
                           <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['name']; ?></td>
-                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
-                              <?= isset($row['imei_code']) && !empty($row['imei_code']) ? $row['imei_code'] : 'Not Provided'; ?>
-                          </td>
-                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
-                              <?= isset($row['warrenty_period']) && !empty($row['warrenty_period']) ? $row['warrenty_period'] : 'Not Provided'; ?>
-                          </td>
-                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($row['orderItemPrice'], 0); ?></td>
-                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['orderItemQuantity']; ?></td>
-                          <td style="border-bottom: 1px solid #ccc; font-weight: bold; font-size: 14px;">
-                            <?= number_format($row['orderItemPrice'] * $row['orderItemQuantity'], 0); ?>
-                          </td>
+                        <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
+                          <?= number_format($row['orderItemPrice'], 2); ?>
+                        </td>
+                        <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
+                          <?= isset($row['orderItemDiscount']) ? number_format($row['orderItemDiscount'], 0) : '0'; ?>
+                        </td>
+                        <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['orderItemQuantity']; ?></td>
+                        <td style="border-bottom: 1px solid #ccc; font-weight: bold; font-size: 14px;">
+                          <?= number_format($totalPrice, 2); ?>
+                        </td>
                         </tr>
                         <?php } ?>
                         <tr>
-                          <td colspan="6" align="end" style="font-weight: bold; font-size: 14px;">Grand Total:</td>
-                          <td colspan="1" style="font-weight: bold; font-size: 14px;"><?= number_format($row['total_amount'], 0); ?></td>
+                          <td colspan="5" align="end" style="font-weight: bold; font-size: 14px;">Grand Total (Rs.):</td>
+                          <td colspan="1" style="font-weight: bold; font-size: 14px;"> <?= number_format($grandTotal, 2); ?></td>
                         </tr>
                         <tr>
-                          <td colspan="5" style="font-size: 14px;">Payment Mode: <?= $row['payment_mode']; ?></td>
+                          <td colspan="6" style="font-size: 14px;">Payment Mode: <?= $row['payment_mode']; ?></td>
                         </tr>
                       </tbody>
                       <tfoot>
@@ -149,7 +151,7 @@
                    
 
                     <!-- Signatures -->
-                    <div style="margin-top: 50px; display: flex; justify-content: space-between;">
+                    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
                         <div style="text-align: center; font-size: 12px; line-height: 12px; margin: 0;">
                             <p>_________________________</p>
                             <p>Customer Signature</p>

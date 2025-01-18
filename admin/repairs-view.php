@@ -32,7 +32,7 @@
 
                     // Check if repair cost is added
                     $costQuery = "
-                        SELECT invoice_number, repair_cost 
+                        SELECT invoice_number, repair_cost, advanced_payment 
                         FROM repair_orders 
                         WHERE repair_id = $repairId
                     ";
@@ -90,7 +90,7 @@
                             </tr>
                             <tr>
                                 <th>Advanced Payment (Rs.)</th>
-                                <td><?= number_format($costData['advanced_payment'] ?? 0, 2); ?></td>
+                                <td><?= isset($costData['advanced_payment']) ? number_format($costData['advanced_payment'], 2) : 'Not Provided'; ?></td>
                             </tr>
                         </table>
                         <?php

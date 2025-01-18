@@ -4,64 +4,87 @@ include('../config/function.php');
 
 
 if (isset($_POST['addItem'])) {
-    $productId = validate($_POST['product_id']);
-    $quantity = validate($_POST['quantity']);
+    // Validate inputs
+    $productId = isset($_POST['product_id']) && !empty($_POST['product_id']) ? validate($_POST['product_id']) : null;
+    $barcode = isset($_POST['barcode']) && !empty($_POST['barcode']) ? validate($_POST['barcode']) : null;
+    $quantity = isset($_POST['quantity']) ? validate($_POST['quantity']) : null;
 
-    $checkProduct = mysqli_query($conn, "SELECT * FROM products WHERE id='$productId' LIMIT 1");
+    // Check if quantity is provided
+    if (!$quantity || $quantity <= 0) {
+        redirect('order-create.php', 'Please enter a valid quantity!');
+    }
 
-    if ($checkProduct) {
-        if (mysqli_num_rows($checkProduct) > 0) {
-            $row = mysqli_fetch_assoc($checkProduct);
+    // Ensure at least one input (productId or barcode) is provided
+    if (empty($productId) && empty($barcode)) {
+        redirect('order-create.php', 'Please select a product or scan a barcode!');
+    }
 
-            if ($row['quantity'] < $quantity) {
-                redirect('order-create.php', 'Only ' . $row['quantity'] . ' quantity available!');
-            }
+    // Fetch product details based on product ID or barcode
+    $productQuery = null;
+    if ($barcode) {
+        $productQuery = "SELECT * FROM products WHERE barcode='" . mysqli_real_escape_string($conn, $barcode) . "' LIMIT 1";
+    } elseif ($productId) {
+        $productQuery = "SELECT * FROM products WHERE id='" . mysqli_real_escape_string($conn, $productId) . "' LIMIT 1";
+    }
 
-            $productData = [
-                'product_id' => $row['id'],
-                'name' => $row['name'],
-                'image' => $row['image'],
-                'price' => $row['price'],
-                'quantity' => $quantity
-            ];
+    if ($productQuery) {
+        $checkProduct = mysqli_query($conn, $productQuery);
+    }
 
-            // Initialize session arrays if they don't exist
-            if (!isset($_SESSION['productItemIds'])) {
-                $_SESSION['productItemIds'] = [];
-            }
-            if (!isset($_SESSION['productItems'])) {
-                $_SESSION['productItems'] = [];
-            }
+    // Verify product availability
+    if ($checkProduct && mysqli_num_rows($checkProduct) > 0) {
+        $row = mysqli_fetch_assoc($checkProduct);
 
-            // Check if product already exists in session
-            if (!in_array($row['id'], $_SESSION['productItemIds'])) {
-                // Add new product
-                $_SESSION['productItemIds'][] = $row['id'];
-                $_SESSION['productItems'][] = $productData;
-            } else {
-                // Update quantity for existing product
-                foreach ($_SESSION['productItems'] as $key => $productSessionItem) {
-                    if ($productSessionItem['product_id'] == $row['id']) {
-                        $newQuantity = $productSessionItem['quantity'] + $quantity;
+        // Check stock availability
+        if ($row['quantity'] < $quantity) {
+            redirect('order-create.php', 'Only ' . $row['quantity'] . ' quantity available!');
+        }
 
-                        if ($newQuantity > $row['quantity']) {
-                            redirect('order-create.php', 'Only ' . $row['quantity'] . ' quantity available!');
-                        }
+        // Prepare product data
+        $productData = [
+            'product_id' => $row['id'],
+            'name' => $row['name'],
+            'image' => $row['image'],
+            'price' => $row['price'],
+            'discount' => $row['discount'],
+            'quantity' => $quantity
+        ];
 
-                        $_SESSION['productItems'][$key]['quantity'] = $newQuantity;
-                        break;
+        // Initialize session arrays if they don't exist
+        if (!isset($_SESSION['productItemIds'])) {
+            $_SESSION['productItemIds'] = [];
+        }
+        if (!isset($_SESSION['productItems'])) {
+            $_SESSION['productItems'] = [];
+        }
+
+        // Add or update product in session
+        if (!in_array($row['id'], $_SESSION['productItemIds'])) {
+            // Add new product
+            $_SESSION['productItemIds'][] = $row['id'];
+            $_SESSION['productItems'][] = $productData;
+        } else {
+            // Update quantity for existing product
+            foreach ($_SESSION['productItems'] as $key => $productSessionItem) {
+                if ($productSessionItem['product_id'] == $row['id']) {
+                    $newQuantity = $productSessionItem['quantity'] + $quantity;
+
+                    if ($newQuantity > $row['quantity']) {
+                        redirect('order-create.php', 'Only ' . $row['quantity'] . ' quantity available!');
                     }
+
+                    $_SESSION['productItems'][$key]['quantity'] = $newQuantity;
+                    break;
                 }
             }
-
-            redirect('order-create.php', 'Item added: ' . $row['name']);
-        } else {
-            redirect('order-create.php', 'No such product found!');
         }
+
+        redirect('order-create.php', 'Item added: ' . $row['name']);
     } else {
-        redirect('order-create.php', 'Something Went Wrong.');
+        redirect('order-create.php', 'No such product found!');
     }
 }
+
 
 if(isset($_POST['productIncDec']))
 {
@@ -232,6 +255,7 @@ if (isset($_POST['saveOrder'])) {
         foreach ($sessionProducts as $prodItem) {
             $productId = $prodItem['product_id'];
             $price = $prodItem['price'];
+            $discount = $prodItem['discount'];
             $quantity = $prodItem['quantity']; // Fixed typo
 
             // Insert order items
@@ -239,6 +263,7 @@ if (isset($_POST['saveOrder'])) {
                 'order_id' => $lastOrderId,
                 'product_id' => $productId,
                 'price' => $price,
+                'discount' => $discount,
                 'quantity' => $quantity,
             ];
             $orderItemQuery = insert('order_items', $dataOrderItem);

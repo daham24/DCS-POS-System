@@ -68,7 +68,11 @@ $(document).ready(function () {
     }
 
     if (imei_code !== "" && imei_code.length > 50) {
-      swal("IMEI Code too long", "IMEI code must be less than 50 characters", "warning");
+      swal(
+        "IMEI Code too long",
+        "IMEI code must be less than 50 characters",
+        "warning"
+      );
       return false;
     }
 
@@ -77,7 +81,7 @@ $(document).ready(function () {
       cphone: cphone,
       payment_mode: payment_mode,
       imei_code: imei_code,
-      warrenty_period: warrenty_period
+      warrenty_period: warrenty_period,
     };
 
     $.ajax({
@@ -159,26 +163,31 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#saveOrder", function () {
+    console.log("Save Order button clicked"); // Debugging
     $.ajax({
       type: "POST",
       url: "orders-code.php",
       data: { saveOrder: true },
       success: function (response) {
+        console.log("Response received: ", response); // Debugging
         try {
           var res = JSON.parse(response);
+          console.log("Parsed response: ", res); // Debugging
 
           if (res.status == 200) {
             swal("Success", "Order placed successfully!", "success");
             $("#orderPlaceSuccessMessage").text(res.message);
             $("#orderSuccessModal").modal("show");
           } else {
-            swal("Error", res.message, res.status_type);
+            swal("Error", res.message, res.status_type || "error");
           }
         } catch (e) {
+          console.error("Error parsing response: ", e); // Debugging
           swal("Error", "Invalid response from server!", "error");
         }
       },
-      error: function () {
+      error: function (xhr, status, error) {
+        console.error("AJAX error: ", error); // Debugging
         swal("Error", "Failed to connect to server!", "error");
       },
     });
@@ -212,3 +221,80 @@ function downloadPDF(invoiceNo) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const barcodeInput = document.getElementById("barcode");
+  const productSelect = document.querySelector("select[name='product_id']");
+  const tableBody = document.getElementById("itemTableBody");
+
+  barcodeInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      const barcode = barcodeInput.value.trim();
+
+      if (barcode) {
+        fetchProductByBarcode(barcode);
+      }
+    }
+  });
+
+  function fetchProductByBarcode(barcode) {
+    // Make an AJAX request to fetch the product ID by barcode
+    $.ajax({
+      url: "fetch-product-by-barcode.php",
+      type: "POST",
+      data: { barcode: barcode },
+      success: function (response) {
+        const res = JSON.parse(response);
+
+        if (res.status === 200) {
+          const productId = res.product_id;
+          autoSelectProduct(productId);
+        } else if (res.status === 404) {
+          alert("Product not found for the scanned barcode.");
+        } else {
+          alert("Error: " + res.message);
+        }
+      },
+    });
+  }
+
+  function autoSelectProduct(productId) {
+    // Set the product ID in the dropdown
+    productSelect.value = productId;
+
+    // Trigger change event if needed (for Select2 or other plugins)
+    $(productSelect).trigger("change");
+  }
+
+  function addItemToTable(item) {
+    // Check if the item already exists in the table
+    const existingRow = Array.from(tableBody.querySelectorAll("tr")).find(
+      (row) => {
+        return row.querySelector("td")?.innerText === item.id.toString();
+      }
+    );
+
+    if (existingRow) {
+      // Update quantity and total price for existing item
+      const quantityCell = existingRow.querySelector("td:nth-child(4)");
+      const totalPriceCell = existingRow.querySelector("td:nth-child(5)");
+
+      const currentQuantity = parseInt(quantityCell.innerText, 10);
+      const newQuantity = currentQuantity + 1;
+
+      quantityCell.innerText = newQuantity;
+      totalPriceCell.innerText = (newQuantity * item.price).toFixed(2);
+    } else {
+      // Add a new row for the item
+      const newRow = `
+              <tr>
+                  <td>${item.id}</td>
+                  <td>${item.name}</td>
+                  <td>${item.price.toFixed(2)}</td>
+                  <td>1</td> <!-- Default quantity -->
+                  <td>${item.price.toFixed(2)}</td> <!-- Total price -->
+              </tr>
+          `;
+      tableBody.innerHTML += newRow; // Append new row
+    }
+  }
+});

@@ -102,56 +102,71 @@
 
 
                   <?php 
-                    $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, o.*, oi.*, p.*
-                                       FROM orders as o, order_Items as oi, products as p 
-                                       WHERE oi.order_id = o.id AND p.id = oi.product_id AND o.tracking_no = '$trackingNo' ";
-                    
-                    $orderItemsRes = mysqli_query($conn, $orderItemQuery);
-                    if($orderItemsRes)
-                    {
-                      if(mysqli_num_rows($orderItemsRes) > 0)
-                      {
-                        ?>
-                          <h4 class="my-3">Order Items Details</h4>
-                          <table class="table table-bordered table-striped">
-                            <thead>
-                              <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php foreach($orderItemsRes as $orderItemRow) : ?>
-                                <tr>
-                                  <td>
-                                    <img src="<?= $orderItemRow['image'] != '' ? '../'.$orderItemRow['image']: '../assets/images/no-img.jpg'; ?>" 
-                                      style="width:50px; height: 50px;"
-                                      alt="Img" 
-                                    />
-                                    <?= $orderItemRow['name']; ?>
-                                  </td>
-                                  <td width="15%" class="fw-bold text-center">
-                                    <?= number_format($orderItemRow['orderItemPrice'], 0) ?>
-                                  </td>
-                                  <td width="15%" class="fw-bold text-center">
-                                    <?= $orderItemRow['orderItemQuantity']; ?>
-                                  </td>
-                                  <td width="15%" class="fw-bold text-center">
-                                    <?= number_format($orderItemRow['orderItemPrice'] * $orderItemRow['orderItemQuantity'], 0) ?>
-                                  </td>
-                                </tr>
-                              <?php endforeach; ?>
+                    $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, oi.discount as orderItemDiscount, 
+                                  o.*, p.name, p.image, p.discount as productDiscount
+                                  FROM orders as o 
+                                  INNER JOIN order_items as oi ON oi.order_id = o.id
+                                  INNER JOIN products as p ON p.id = oi.product_id
+                                  WHERE o.tracking_no = '$trackingNo'";
 
-                              <tr>
-                                <td class="text-end fw-bold">Total Price: </td>
-                                <td colspan="3" class="text-end fw-bold">Rs: <?= number_format($orderItemRow['total_amount'], 0); ?></td>
-                              </tr>
-                            </tbody>
+                      $orderItemsRes = mysqli_query($conn, $orderItemQuery);
+                      if ($orderItemsRes) {
+                      if (mysqli_num_rows($orderItemsRes) > 0) {
+                      ?>
+                      <h4 class="my-3">Order Items Details</h4>
+                      <table class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Price (Rs.)</th>
+                        <th>Discount (Rs.)</th>
+                        <th>Quantity</th>
+                        <th>Total Price (Rs.)</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <?php 
+                      $grandTotal = 0; // Initialize grand total
+                      foreach ($orderItemsRes as $orderItemRow) : 
+                        // Use order item discount if available, otherwise fallback to product discount
+                        $discount = $orderItemRow['orderItemDiscount'] ?: $orderItemRow['productDiscount'];
 
-                          </table>
-                        <?php
+
+                        // Calculate total price for the item (after discount)
+                        $totalPrice = $orderItemRow['orderItemPrice'] - $discount;
+
+                        // Add to grand total
+                        $grandTotal += $totalPrice;
+                      ?>
+                        <tr>
+                          <td>
+                            <img src="<?= $orderItemRow['image'] != '' ? '../' . $orderItemRow['image'] : '../assets/images/no-img.jpg'; ?>" 
+                              style="width:50px; height: 50px;" 
+                              alt="Img" />
+                            <?= $orderItemRow['name']; ?>
+                          </td>
+                          <td width="15%" class="fw-bold text-center">
+                            <?= number_format($orderItemRow['orderItemPrice'], 0); ?>
+                          </td>
+                          <td width="15%" class="fw-bold text-center">
+                            <?= number_format($discount, 0); ?>
+                          </td>
+                          <td width="15%" class="fw-bold text-center">
+                            <?= $orderItemRow['orderItemQuantity']; ?>
+                          </td>
+                          <td width="15%" class="fw-bold text-center">
+                            <?= number_format($totalPrice, 0); ?>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+
+                      <tr>
+                        <td colspan="4" class="text-end fw-bold">Grand Total (Rs.):</td>
+                        <td class="text-end fw-bold">Rs: <?= number_format($grandTotal, 0); ?></td>
+                      </tr>
+                      </tbody>
+                      </table>
+                      <?php
 
                       }else{
                         echo '<h5>Something Went Wrong!</h5>';
