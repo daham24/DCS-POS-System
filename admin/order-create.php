@@ -148,9 +148,18 @@
               </tbody>
             </table>
           </div>
-
           <div class="mt-2">
             <hr>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                  <label for="imei_code">Enter IMEI Code (optional)</label>
+                  <input type="text" class="form-control" id="imei_code" name="imei_code" placeholder="IMEI Code">
+              </div>
+              <div class="col-md-4 mb-3">
+                  <label for="imei_code">Warrenty Period</label>
+                  <input type="text" class="form-control" id="warrenty_period" name="warrenty_period" placeholder="Warrenty Period">
+              </div>
+            </div>
             <div class="row">
                 <div class="col-md-4">
                   <label>Select Payment Mode</label>

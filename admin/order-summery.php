@@ -122,6 +122,8 @@ if (!isset($_SESSION['productItems'])) {
                             <tr>
                               <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="5%">ID</th>
                               <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Product Name</th>
+                              <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">IMEI No.</th>
+                              <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Warranty Period</th>
                               <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Price</th>
                               <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Quantity</th>
                               <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="15%">Total Price</th>
@@ -137,6 +139,12 @@ if (!isset($_SESSION['productItems'])) {
                             <tr>
                               <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $i++; ?></td>
                               <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['name']; ?></td>
+                              <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
+                                  <?= isset($_SESSION['imei_code']) ? $_SESSION['imei_code'] : 'Not Provided'; ?>
+                              </td>
+                              <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
+                                  <?= isset($_SESSION['warrenty_period']) ? $_SESSION['warrenty_period'] : 'Not Provided'; ?>
+                              </td>
                               <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($row['price'], 0); ?></td>
                               <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['quantity']; ?></td>
                               <td style="border-bottom: 1px solid #ccc; font-weight: bold;">
@@ -145,23 +153,24 @@ if (!isset($_SESSION['productItems'])) {
                             </tr>
                             <?php } ?>
                             <tr>
-                              <td colspan="4" align="end" style="font-weight: bold; font-size: 14px;">Grand Total:</td>
+                              <td colspan="6" align="end" style="font-weight: bold; font-size: 14px;">Grand Total:</td>
                               <td colspan="1" style="font-weight: bold; font-size: 14px;"><?= number_format($totalAmount, 0); ?></td>
                             </tr>
                             <tr>
                               <td colspan="5" style="font-size: 14px;">Payment Mode: <?= $_SESSION['payment_mode']; ?></td>
                             </tr>
-                            <tfoot>
-                              <tr>
-                                  <td colspan="5" style="padding-top: 20px;">
-                                    <h5 style="font-size: 12px; margin-bottom: 5px;">Terms and Conditions</h5>
-                                    <p tyle="font-size: 8px; line-height: 16px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
-                                    <p tyle="font-size: 8px; line-height: 16px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
-                                    <p tyle="font-size: 8px; line-height: 16px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
-                                  </td>
-                              </tr>
-                            </tfoot>
                           </tbody>
+                          <tfoot>
+                            <!-- Terms and Conditions -->
+                            <tr>
+                                <td colspan="5" style="padding-top: 20px;">
+                                  <h5 style="font-size: 12px; margin-bottom: 5px;">Terms and Conditions</h5>
+                                  <p style="font-size: 10px; line-height: 16px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
+                                  <p style="font-size: 10px; line-height: 16px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
+                                  <p style="font-size: 10px; line-height: 16px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
+                                </td>
+                            </tr>
+                          </tfoot>
                         </table>
 
                         <!-- Signatures -->

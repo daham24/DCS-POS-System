@@ -97,6 +97,8 @@ if(isset($_POST['productIncDec']))
 if(isset($_POST['proceedToPlaceBtn'])){
     $phone = validate($_POST['cphone']);
     $payment_mode = validate($_POST['payment_mode']);
+    $imei_code = isset($_POST['imei_code']) ? validate($_POST['imei_code']) : null;
+    $warrenty_period = isset($_POST['warrenty_period']) ? validate($_POST['warrenty_period']) : null;
 
     //checking for Customer
     $checkingCustomer = mysqli_query($conn, "SELECT * FROM customers WHERE phone='$phone' LIMIT 1");
@@ -107,6 +109,8 @@ if(isset($_POST['proceedToPlaceBtn'])){
             $_SESSION['invoice_no'] = "INV-".rand(111111,999999);
             $_SESSION['cphone'] = $phone;
             $_SESSION['payment_mode'] = $payment_mode;
+            $_SESSION['imei_code'] = $imei_code;
+            $_SESSION['warrenty_period'] = $warrenty_period;
             jsonResponse(200, 'success', 'Customer Found');
 
         }
@@ -151,6 +155,9 @@ if(isset($_POST['saveCustomerBtn']))
 
 if (isset($_POST['saveOrder'])) {
     $phone = validate($_SESSION['cphone']);
+    $imei_code = isset($_POST['imei_code']) && !empty($_POST['imei_code']) ? validate($_POST['imei_code']) : (isset($_SESSION['imei_code']) ? $_SESSION['imei_code'] : null);
+    $warrenty_period = isset($_POST['warrenty_period']) && !empty($_POST['warrenty_period']) ? validate($_POST['warrenty_period']) : (isset($_SESSION['warrenty_period']) ? $_SESSION['warrenty_period'] : null);
+    
     // Generate a structured invoice number
     $yearMonth = date('Y-m'); // Get the current year and month
     $prefix = 'INV';
@@ -198,11 +205,13 @@ if (isset($_POST['saveOrder'])) {
             $totalAmount += $amtItem['price'] * $amtItem['quantity'];
         }
 
-        // Insert into orders table
+        // Insert into orders table, including imei_code and warrenty_period
         $data = [
             'customer_id' => $customerData['id'],
             'tracking_no' => rand(11111, 99999),
             'invoice_no' => $invoice_no,
+            'imei_code' => $imei_code ?: 'Not Provided', // Fallback if IMEI is not provided
+            'warrenty_period' => $warrenty_period ?: 'Not Provided', // Fallback if Warranty Period is not provided
             'total_amount' => $totalAmount,
             'order_date' => date('Y-m-d'),
             'order_status' => 'booked',
@@ -215,9 +224,11 @@ if (isset($_POST['saveOrder'])) {
             jsonResponse(500, 'error', 'Failed to place order!');
             return; // Terminate script
         }
+        
 
         $lastOrderId = mysqli_insert_id($conn);
 
+        // Insert order items into order_items table
         foreach ($sessionProducts as $prodItem) {
             $productId = $prodItem['product_id'];
             $price = $prodItem['price'];
@@ -263,6 +274,8 @@ if (isset($_POST['saveOrder'])) {
         unset($_SESSION['cphone']);
         unset($_SESSION['payment_mode']);
         unset($_SESSION['invoice_no']);
+        unset($_SESSION['imei_code']);
+        unset($_SESSION['warrenty_period']);
 
         jsonResponse(200, 'success', 'Order Placed Successfully');
     } else {

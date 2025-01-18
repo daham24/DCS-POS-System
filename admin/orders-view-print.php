@@ -81,8 +81,9 @@
                 return false;
               }
 
-              $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, o.*, oi.*, p.* FROM orders o, order_items oi, products p
-                                WHERE oi.order_id = o.id AND p.id = oi.product_id AND o.tracking_no = '$trackingNo' ";
+              $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, o.*, oi.*, p.*, o.imei_code, o.warrenty_period 
+                                  FROM orders o, order_items oi, products p
+                                  WHERE oi.order_id = o.id AND p.id = oi.product_id AND o.tracking_no = '$trackingNo' ";
 
               $orderItemQueryRes = mysqli_query($conn, $orderItemQuery);  
               if($orderItemQueryRes)
@@ -95,6 +96,8 @@
                         <tr>
                           <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="5%">ID</th>
                           <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Product Name</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">IMEI No.</th>
+                          <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Warranty Period</th>
                           <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Price</th>
                           <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="10%">Quantity</th>
                           <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="15%">Total Price</th>
@@ -109,6 +112,12 @@
                         <tr>
                           <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $i++; ?></td>
                           <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['name']; ?></td>
+                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
+                              <?= isset($row['imei_code']) && !empty($row['imei_code']) ? $row['imei_code'] : 'Not Provided'; ?>
+                          </td>
+                          <td style="border-bottom: 1px solid #ccc; font-size: 14px;">
+                              <?= isset($row['warrenty_period']) && !empty($row['warrenty_period']) ? $row['warrenty_period'] : 'Not Provided'; ?>
+                          </td>
                           <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($row['orderItemPrice'], 0); ?></td>
                           <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $row['orderItemQuantity']; ?></td>
                           <td style="border-bottom: 1px solid #ccc; font-weight: bold; font-size: 14px;">
@@ -117,7 +126,7 @@
                         </tr>
                         <?php } ?>
                         <tr>
-                          <td colspan="4" align="end" style="font-weight: bold; font-size: 14px;">Grand Total:</td>
+                          <td colspan="6" align="end" style="font-weight: bold; font-size: 14px;">Grand Total:</td>
                           <td colspan="1" style="font-weight: bold; font-size: 14px;"><?= number_format($row['total_amount'], 0); ?></td>
                         </tr>
                         <tr>

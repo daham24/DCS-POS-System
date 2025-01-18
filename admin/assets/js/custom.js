@@ -54,6 +54,8 @@ $(document).ready(function () {
   $(document).on("click", ".proceedToPlace", function () {
     var cphone = $("#cphone").val();
     var payment_mode = $("#payment_mode").val();
+    var imei_code = $("#imei_code").val();
+    var warrenty_period = $("#warrenty_period").val();
 
     if (payment_mode == "") {
       swal("Select Payment Mode", "Select your payment mode", "warning");
@@ -65,10 +67,17 @@ $(document).ready(function () {
       return false;
     }
 
+    if (imei_code !== "" && imei_code.length > 50) {
+      swal("IMEI Code too long", "IMEI code must be less than 50 characters", "warning");
+      return false;
+    }
+
     var data = {
       proceedToPlaceBtn: true,
       cphone: cphone,
       payment_mode: payment_mode,
+      imei_code: imei_code,
+      warrenty_period: warrenty_period
     };
 
     $.ajax({

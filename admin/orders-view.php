@@ -69,6 +69,15 @@
                           <span class="fw-bold"><?= $orderData['payment_mode']; ?></span>
                         </label>
                         <br>
+                        <label class="mb-1">
+                            IMEI Code: 
+                            <span class="fw-bold"><?= isset($orderData['imei_code']) ? $orderData['imei_code'] : 'Not Provided'; ?></span>
+                        </label>
+                        <br>
+                        <label class="mb-1">
+                            Warrenty Period: 
+                            <span class="fw-bold"><?= isset($orderData['warrenty_period']) ? $orderData['warrenty_period'] : 'Not Provided'; ?></span>
+                        </label>
                       </div>
                       <div class="col-md-6">
                         <h4>User Details</h4>

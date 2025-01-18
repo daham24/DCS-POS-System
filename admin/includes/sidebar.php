@@ -30,7 +30,7 @@
                     data-bs-toggle="collapse" 
                     data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory"
                     <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
                     Categories
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -46,7 +46,7 @@
                     data-bs-toggle="collapse" 
                     data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapseProduct"
                     <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-list-check"></i></div>
                     Products
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -78,7 +78,7 @@
                     data-bs-target="#collapseAdmins" 
                     aria-expanded="false" aria-controls="collapseAdmins"
                     <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-user-tie"></i></i></div>
                     Admins/Staff
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -86,6 +86,23 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link <?= $page == 'admins-create.php' ? 'active' : ''; ?>" href="admins-create.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >Add Admins</a>
                         <a class="nav-link <?= $page == 'admins.php' ? 'active' : ''; ?>" href="admins.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >View Admins</a>
+                    </nav>
+                </div>
+
+
+                <a class="nav-link <?= ($page == 'admins-create.php') || ($page == 'admins.php') ? 'collapse active' : 'collapsed'; ?>" href="#" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#collapseCustomers" 
+                    aria-expanded="false" aria-controls="collapseCustomers"
+                    <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></i></div>
+                    Customers
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse <?= ($page == 'customers-create.php') || ($page == 'customers.php') ? 'show' : ''; ?>" id="collapseCustomers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link <?= $page == 'customers-create.php' ? 'active' : ''; ?>" href="customers-create.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >Add Customer</a>
+                        <a class="nav-link <?= $page == 'customers.php' ? 'active' : ''; ?>" href="customers.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >View Customers</a>
                     </nav>
                 </div>
             </div>
