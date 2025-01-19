@@ -208,7 +208,7 @@ function printMyBillingArea() {
   var divContents = document.getElementById("myBillingArea").innerHTML;
   var a = window.open("", "");
   a.document.write("<html><title>DCS POS System</title>");
-  a.document.write('<body style="font-family: fangsong;">');
+  a.document.write("<body style='font-family: Helvetica, Arial, sans-serif;'>");
   a.document.write(divContents);
   a.document.write("</body></html>");
   a.document.close();

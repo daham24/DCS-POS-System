@@ -59,36 +59,39 @@ if (!isset($_SESSION['productItems'])) {
                       if (mysqli_num_rows($customerQuery) > 0) {
                           $cRowData = mysqli_fetch_assoc($customerQuery);
                           ?>
-                          <table style="width: 100%; border-collapse: collapse;">
+
+                          <!-- Header Section -->
+                          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding: 10px;">
+                            <div>
+                              <h2 style="margin: 0; font-size: 24px;">INVOICE</h2>
+                            </div>
+                            <div>
+                              <img src="../assets/img/png.png" alt="Logo" style="width: auto; height: 60px;">
+                            </div>
+                          </div>
+
+
+
+                          <table style="width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px;">
                               <tbody>
-                                <!-- Header Row -->
-                                <tr>
-                                  <td style="text-align: center;" colspan="2">
-                                    <span><img src="../assets/img/png.png" alt="dcs-logo" style="width: auto; height: 80px;"></span>
-                                    <h4 style="font-size: 18px; line-height: 28px; margin: 2px;">Dimuthu Cellular Service</h4>
-                                    <p style="font-size: 14px; line-height: 22px; margin: 2px;">319/1A, Urubokka Road, Heegoda.</p>
-                                    <p style="font-size: 14px; line-height: 22px; margin: 2px;">070 691 7666 | 077 791 7666 | 070 391 7666</p>
-                                    <p style="font-size: 14px; line-height: 22px; margin: 2px;">www.dcs.lk | info@dcs.lk</p>
-                                  </td>
-                                </tr>
               
                                 <!-- Customer and Invoice Details Row -->
                                 <tr>
                                   <!-- Customer Details -->
-                                  <td>
-                                    <h5 style="font-size: 14px; line-height: 28px; margin: 0;">Customer Details</h5>
-                                    <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Name: <?= $cRowData['name'] ?></p>
-                                    <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Phone No.: <?= $cRowData['phone'] ?></p>
-                                    <p style="font-size: 12px; line-height: 18px; margin: 0;">Customer Email ID: <?= $cRowData['email'] ?></p>
+                                  <td style="width: 50%; padding: 10px; vertical-align: top; ">
+                                    <h5 style="font-size: 12px; margin: 0;">Customer Details</h5>
+                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Name:</strong> <?= $cRowData['name'] ?></p>
+                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Phone:</strong> <?= $cRowData['phone'] ?></p>
+                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Email:</strong> <?= $cRowData['email'] ?></p>
                                   </td>
               
                                   <!-- Invoice Details -->
-                                  <td style="text-align: right;">
-                                    <h5 style="font-size: 14px; line-height: 28px; margin: 0;">Invoice Details</h5>
-                                    <p style="font-size: 12px; line-height: 18px; margin: 0;">Invoice No.: <?= $invoiceNo ?></p>
-                                    <p style="font-size: 12px; line-height: 18px; margin: 0;">Invoice Date: <?= date('d M Y') ?></p>
-                                    <p style="font-size: 12px; line-height: 18px; margin: 0;">IMEI No.: <?= isset($_SESSION['imei_code']) ? $_SESSION['imei_code'] : 'Not Provided'; ?></p>
-                                    <p style="font-size: 12px; line-height: 18px; margin: 0;">Warranty Period: <?= isset($_SESSION['warrenty_period']) ? $_SESSION['warrenty_period'] : 'Not Provided'; ?></p>
+                                  <td style="width: 50%; padding: 10px; vertical-align: top; text-align: right; ">
+                                    <h5 style="font-size: 12px; margin: 0;">Invoice Details</h5>
+                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Invoice No:</strong> <?= $invoiceNo ?></p>
+                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Date:</strong> <?= date('d M Y') ?></p>
+                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>IMEI:</strong> <?= isset($_SESSION['imei_code']) ? $_SESSION['imei_code'] : 'Not Provided'; ?></p>
+                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Warranty:</strong> <?= isset($_SESSION['warrenty_period']) ? $_SESSION['warrenty_period'] : 'Not Provided'; ?></p>
                                   </td>
                                 </tr>
                               </tbody>
@@ -114,15 +117,15 @@ if (!isset($_SESSION['productItems'])) {
                   ?>
               
                   <div class="table-responsive mb-3">
-                      <table style="width:100%;" cellpadding="5">
+                      <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 12px;">
                           <thead>
-                              <tr>
-                                  <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" width="5%">ID</th>
-                                  <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;">Product Name</th>
-                                  <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" >Price (Rs.)</th>
-                                  <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" >Discount (Rs.)</th>
-                                  <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" >Quantity</th>
-                                  <th align="start" style="border-bottom: 1px solid #ccc; font-size: 14px;" >Total Price (Rs.)</th>
+                              <tr style="text-align: left;">
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" width="5%">ID</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Product Name</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Price</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Discount</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Quantity</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Total</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -149,52 +152,26 @@ if (!isset($_SESSION['productItems'])) {
                                 $grandTotal += $totalPrice;
                               ?>
                               <tr>
-                                  <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $i++; ?></td>
-                                  <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $item['name']; ?></td>
-                                  <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($item['price'], 2); ?></td>
-                                  <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= number_format($discount, 0); ?></td>
-                                  <td style="border-bottom: 1px solid #ccc; font-size: 14px;"><?= $item['quantity']; ?></td>
-                                  <td style="border-bottom: 1px solid #ccc; font-weight: bold;">
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $i++; ?></td>
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $item['name']; ?></td>
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= number_format($item['price'], 2); ?></td>
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= number_format($discount, 2); ?></td>
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $item['quantity']; ?></td>
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;">
                                       <?= number_format($totalPrice, 2); ?>
                                   </td>
                               </tr>
                               <?php } ?>
                               <tr>
-                                  <td colspan="5" align="end" style="font-weight: bold; font-size: 14px;">Grand Total (Rs.):</td>
-                                  <td colspan="1" style="font-weight: bold; font-size: 14px;"> <?= number_format($grandTotal, 2); ?></td>
+                                  <td colspan="5" align="end" style="text-align: right; padding: 5px; font-weight: bold;">Grand Total:</td>
+                                  <td colspan="1" style="font-size:18px; color:#e55300; padding: 5px; font-weight: bold; "> <?= number_format($grandTotal, 2); ?></td>
                               </tr>
                               <tr>
-                                  <td colspan="6" style="font-size: 14px;">Payment Mode: <?= $_SESSION['payment_mode']; ?></td>
+                                  <td colspan="6" style="font-size: 12px;">Payment Mode: <?= $_SESSION['payment_mode']; ?></td>
                               </tr>
                           </tbody>
                           <tfoot>
-                            <!-- Terms and Conditions -->
-                            <tr>
-                                <td colspan="5" style="padding-top: 20px;">
-                                  <h5 style="font-size: 12px; margin-bottom: 5px;">Terms and Conditions</h5>
-                                  <p style="font-size: 10px; line-height: 16px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
-                                  <p style="font-size: 10px; line-height: 16px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
-                                  <p style="font-size: 10px; line-height: 16px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
-                                </td>
-                            </tr>
-                          </tfoot>
                         </table>
-
-                        <!-- Signatures -->
-                        <div style="margin-top: 50px; display: flex; justify-content: space-between;">
-                            <div style="text-align: center; font-size: 12px; line-height: 12px; margin: 0;">
-                                <p>_________________________</p>
-                                <p>Customer Signature</p>
-                            </div>
-                            <div style="text-align: center; font-size: 12px; line-height: 12px; margin: 0;">
-                                <p>_________________________</p>
-                                <p>Authorized Signature</p>
-                            </div>
-                        </div>
-                      </div>
-
-
-
                     <?php
 
                   }else{
