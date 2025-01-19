@@ -25,14 +25,13 @@
           <a 
               class="btn btn-danger" 
               style="background-color: rgba(44, 44, 44, 1); border: rgba(44, 44, 44, 1);" 
-              href="logout.php">Logout
+              href="logout.php">Logout 
           </a>
-
         </li>
 
         <?php else: ?>
         <li class="nav-item">
-          <a class="nav-link" href="login.php">Login</a>
+          <a class="nav-link" href="login.php"> <i class="fa-solid fa-arrow-right-from-bracket"></i>Login</a>
         </li>
         <?php endif; ?>
 

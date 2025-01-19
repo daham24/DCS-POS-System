@@ -36,8 +36,8 @@ if(isset($_SESSION['loggedIn'])){
               </div>
           </form>
 
-          <a href="#" class="forgot-password">Forgot Password?</a>
-          <div class="website-link">Don't have an account? <a href="#">Sign Up</a></div>
+          <!-- <a href="#" class="forgot-password">Forgot Password?</a>
+          <div class="website-link">Don't have an account? <a href="#">Sign Up</a></div> -->
         </div>
       </div>
       <div class="image-column">

@@ -117,7 +117,7 @@
                     ?>
 
                     <div class="mt-4 text-end">
-                        <a href="repairs-view-print.php?id=<?= $repairData['id']; ?>" class="btn btn-info px-4 mx-1">Print</a>
+                        <a href="repairs-view-print.php?id=<?= $repairData['id']; ?>" class="btn btn-info px-4 mx-1"><i class="fa-solid fa-print"></i> Print</a>
                         <button class="btn btn-primary px-4 mx-1" onclick="downloadPDF('<?= $repairData['id']; ?>')">Download PDF</button>
                     </div>
                     <?php

@@ -193,7 +193,7 @@
       </div>
 
         <div class="mt-4 text-end">
-          <button class="btn btn-info px-4 mx-1" onclick="printMyBillingArea()">Print</button>
+          <button class="btn btn-info px-4 mx-1" onclick="printMyBillingArea()"><i class="fa-solid fa-print"></i> Print</button>
           <button class="btn btn-primary px-4 mx-1" onclick="downloadPDF('<?= $orderDataRow['invoice_no']; ?>')">Download PDF</button>
         </div>
       </div>

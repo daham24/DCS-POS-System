@@ -3,8 +3,7 @@
 <div class="welcome-container" style="position: relative; overflow: hidden; width: 100%; height: 50vh; margin-top: 100px">
   <h1 class="welcome-title">Dimuthu Cellular Service</h1>
   <p class="welcome-description">
-    Body text for whatever you'd like to say. Add main takeaway points, quotes,
-    anecdotes, or even a very very short story.
+    Welcome to the DCS POS System. Manage, organize, and lead with efficiency. Together, let’s drive excellence.
   </p>
   <div class="button-container">
     <button class="login-button" tabindex="0">

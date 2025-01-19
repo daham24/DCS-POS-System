@@ -46,7 +46,7 @@ if ($currentDate > $expiryDate) {
     <div class="row">
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-dark bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Total Category</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fa-solid fa-layer-group"></i> Total Category</p>
                 <h5 class="fw-bold mb-0">
                     <?= getCount('categories'); ?>
                 </h5>
@@ -55,7 +55,7 @@ if ($currentDate > $expiryDate) {
 
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-dark bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Total Products</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fa-solid fa-list-check"></i> Total Products</p>
                 <h5 class="fw-bold mb-0">
                     <?= getCount('products'); ?>
                 </h5>
@@ -64,7 +64,7 @@ if ($currentDate > $expiryDate) {
 
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-dark bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Total Admins</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fa-solid fa-user-tie"></i> Total Admins</p>
                 <h5 class="fw-bold mb-0">
                     <?= getCount('admins'); ?>
                 </h5>
@@ -73,7 +73,7 @@ if ($currentDate > $expiryDate) {
 
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-dark bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Total Customers</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fa-solid fa-users"></i> Total Customers</p>
                 <h5 class="fw-bold mb-0">
                     <?= getCount('customers'); ?>
                 </h5>
@@ -87,7 +87,7 @@ if ($currentDate > $expiryDate) {
 
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-secondary bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Today Orders</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fa-solid fa-calendar-week"></i></i> Today Orders</p>
                 <h5 class="fw-bold mb-0">
                    <?php 
                         $todayDate = date('Y-m-d');
@@ -110,7 +110,7 @@ if ($currentDate > $expiryDate) {
 
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-secondary bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Total Orders</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fas fa-list"></i> Total Orders</p>
                 <h5 class="fw-bold mb-0">
                     <?= getCount('orders'); ?>
                 </h5>
@@ -120,7 +120,7 @@ if ($currentDate > $expiryDate) {
         <!-- New Card for Pending Repair Items -->
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-secondary bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Pending Repair Items</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fa-solid fa-clock"></i> Pending Repair Items</p>
                 <h5 class="fw-bold mb-0">
                     <?php
                         $pendingRepairs = mysqli_query($conn, "SELECT * FROM repairs WHERE status = 0"); // Assuming 0 = Pending
@@ -138,13 +138,55 @@ if ($currentDate > $expiryDate) {
         <!-- New Card for Total Repairs -->
         <div class="col-md-3 mb-3">
             <div class="card card-body bg-secondary bg-gradient text-white p-3">
-                <p class="text-sm mb-0 text-capitalize">Total Repairs</p>
+                <p class="text-sm mb-0 text-capitalize"><i class="fas fa-tools"></i> Total Repairs</p>
                 <h5 class="fw-bold mb-0">
                     <?= getCount('repairs'); ?>
                 </h5>
             </div>
         </div>
     </div>
+
+    <?php
+        $queryUnavailableItems = "
+            SELECT p.id, p.name AS product_name, c.name AS category_name, p.price 
+            FROM products p 
+            INNER JOIN categories c ON p.category_id = c.id 
+            WHERE p.quantity = 0";
+        $resultUnavailableItems = mysqli_query($conn, $queryUnavailableItems);
+    ?>
+    <?php if ($resultUnavailableItems && mysqli_num_rows($resultUnavailableItems) > 0): ?>
+        <div class="card mt-4">
+        <div class="card-header">
+            <h4>Unavailable Items</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php while ($row = mysqli_fetch_assoc($resultUnavailableItems)): ?>
+                    <tr>
+                    <td><?= $row['id']; ?></td>
+                    <td><?= $row['product_name']; ?></td>
+                    <td><?= $row['category_name']; ?></td>
+                    <td><?= number_format($row['price'], 2); ?></td>
+                    <td><span class="badge bg-danger">Not Available</span></td>
+                    </tr>
+                <?php endwhile; ?>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        </div>
+    <?php endif; ?>
 
     <!-- Welcome Section -->
     <div class="row">
@@ -163,6 +205,8 @@ if ($currentDate > $expiryDate) {
         </div>
     </div>
 </div>
+
+
 
 <!-- JavaScript for Live Clock -->
 <script>
