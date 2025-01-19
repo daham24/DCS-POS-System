@@ -169,9 +169,60 @@ if (!isset($_SESSION['productItems'])) {
                               <tr>
                                   <td colspan="6" style="font-size: 12px;">Payment Mode: <?= $_SESSION['payment_mode']; ?></td>
                               </tr>
+                              <!-- Terms and Conditions -->
+                              <tr>
+                                  <td colspan="5" style="padding-top: 20px;">
+                                    <h5 style="font-size: 12px; margin-bottom: 5px;">Terms and Conditions</h5>
+                                    <p style="font-size: 10px; line-height: 16px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
+                                    <p style="font-size: 10px; line-height: 16px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
+                                    <p style="font-size: 10px; line-height: 16px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
+                                  </td>
+                              </tr>
                           </tbody>
                           <tfoot>
                         </table>
+                        <!-- Signatures Section -->
+                        <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center;">
+                          <!-- Customer Signature -->
+                          <div style="text-align: center; font-size: 12px; line-height: 1.5; margin: 0;">
+                            <p style="margin: 0; font-weight: bold;">_________________________</p>
+                            <p style="margin: 5px 0 0; font-size: 10px;">Customer Signature</p>
+                          </div>
+                          <!-- Authorized Signature -->
+                          <div style="text-align: center; font-size: 12px; line-height: 1.5; margin: 0;">
+                            <p style="margin: 0; font-weight: bold;">_________________________</p>
+                            <p style="margin: 5px 0 0; font-size: 10px;">Authorized Signature</p>
+                          </div>
+                        </div>
+
+                        <!-- Footer Section -->
+                        <div style="background-color: #333; color: #fff; padding:10px 15px; margin-top: 50px; font-size: 10px;">
+                          <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <!-- Web and Email -->
+                            <div style="flex: 1;">
+                              <p style="margin: 0; font-size: 12px; font-weight: bold;">Web & Email</p>
+                              <p style="margin: 0; font-size: 10px;">www.dcs.lk</p>
+                              <p style="margin: 0; font-size: 10px;">info@dcs.lk</p>
+                            </div>
+                            <!-- Address -->
+                            <div style="flex: 1;">
+                              <p style="margin: 0; font-size: 12px; font-weight: bold;">Address</p>
+                              <p style="margin: 0; font-size: 10px;">319/A, Urubokka Road</p>
+                              <p style="margin: 0; font-size: 10px;">Heegoda.</p>
+                            </div>
+                            <!-- Contact -->
+                            <div style="flex: 1;">
+                              <p style="margin: 0; font-size: 12px; font-weight: bold;">Contact</p>
+                              <p style="margin: 0; font-size: 10px;">070 691 7666</p>
+                              <p style="margin: 0; font-size: 10px;">077 791 7666</p>
+                              <p style="margin: 0; font-size: 10px;">070 391 7666</p>
+                            </div>
+                            <!-- QR Code -->
+                            <div style="flex: 0.5; text-align: right;">
+                              <img src="../assets/img/qr-code.jpeg" alt="QR Code" style="width: 50px; height: auto;  padding: 5px; border-radius: 5px;">
+                            </div>
+                          </div>
+                        </div>
                     <?php
 
                   }else{
@@ -180,17 +231,15 @@ if (!isset($_SESSION['productItems'])) {
                 ?>
               
             </div>
-
-            <?php if(isset($_SESSION['productItems'])) :  ?>
-            <div class="mt-4 text-end">
-              <button type="button" class="btn btn-primary px-4 mx-1" id="saveOrder">Save</button>
-              <button class="btn btn-info px-4 mx-1" onclick="printMyBillingArea()">Print</button>
-              <button class="btn btn-warning px-4 mx-1" onclick="downloadPDF('<?= $_SESSION['invoice_no']; ?>')">Download PDF</button>
-            </div>
-            <?php endif; ?>
-
         </div>
       </div>
+      <?php if(isset($_SESSION['productItems'])) :  ?>
+      <div class="mt-4 text-end">
+        <button type="button" class="btn btn-primary px-4 mx-1" id="saveOrder">Save</button>
+        <button class="btn btn-info px-4 mx-1" onclick="printMyBillingArea()">Print</button>
+        <button class="btn btn-warning px-4 mx-1" onclick="downloadPDF('<?= $_SESSION['invoice_no']; ?>')">Download PDF</button>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>
