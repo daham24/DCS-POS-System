@@ -132,7 +132,7 @@
 
 
                  <!-- Signatures Section -->
-                <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="margin-top: 50px; display: flex; justify-content: space-between; align-items: center;">
                   <!-- Customer Signature -->
                   <div style="text-align: center; font-size: 12px; line-height: 1.5; margin: 0;">
                     <p style="margin: 0; font-weight: bold;">_________________________</p>
@@ -146,7 +146,7 @@
                 </div>
 
                 <!-- Footer Section -->
-                <div style="background-color: #333; color: #fff; padding:10px 15px; margin-top: 50px; font-size: 10px;">
+                <div  style="background-color: #333; color: #fff; padding:10px 15px; margin-top: 80px; font-size: 10px;">
                   <div style="display: flex; justify-content: space-between; align-items: center;">
                     <!-- Web and Email -->
                     <div style="flex: 1;">

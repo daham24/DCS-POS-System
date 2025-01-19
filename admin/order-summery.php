@@ -234,7 +234,7 @@ if (!isset($_SESSION['productItems'])) {
         </div>
       </div>
       <?php if(isset($_SESSION['productItems'])) :  ?>
-      <div class="mt-4 text-end">
+      <div class="mt-4 text-end mb-4 ">
         <button type="button" class="btn btn-primary px-4 mx-1" id="saveOrder">Save</button>
         <button class="btn btn-info px-4 mx-1" onclick="printMyBillingArea()">Print</button>
         <button class="btn btn-warning px-4 mx-1" onclick="downloadPDF('<?= $_SESSION['invoice_no']; ?>')">Download PDF</button>
