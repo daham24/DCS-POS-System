@@ -155,7 +155,13 @@ if(isset($_POST['saveProduct']))
   $description = validate($_POST['description']);
   $price = validate($_POST['price']);
   $quantity = validate($_POST['quantity']);
-  $barcode = validate($_POST['barcode']); // New field
+
+  if (!isset($_POST['barcode']) || empty($_POST['barcode'])) {
+    $barcode = null; // Set to null if no barcode is provided
+  } else {
+      $barcode = validate($_POST['barcode']);
+  }
+  
   $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0; // New field with default
   $status = isset($_POST['status']) == true ? 1 : 0;
 

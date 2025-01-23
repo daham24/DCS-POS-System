@@ -134,9 +134,8 @@
                         <tr>
                             <td colspan="5" style="padding-top: 20px;">
                               <h5 style="font-size: 12px; margin-bottom: 5px; font-weight: bold;">Terms and Conditions</h5>
-                              <p style="font-size: 10px; line-height: 16px; margin: 0;">1. භාණ්ඩය විකුණුමෙන් පසු ආපසු ගත හෝ මාරු කළ නොහැක.</p>
-                              <p style="font-size: 10px; line-height: 16px; margin: 0;">2. වගකීම නිෂ්පාදන දෝෂයන්ට පමණක් අදාළ වේ. එය අධික වෝල්ටීයතාව, දියර දෝෂ, වැටීමෙන් ඇතිවූ හානි, හෝ නිල මුද්‍රාව දැක්වීමෙන් හෝ ඉවත් කිරීමෙන් ඇතිවූ හානි ආවරණය කරන්නේ නැත.</p>
-                              <p style="font-size: 10px; line-height: 16px; margin: 0;">3. වගකීමක් ඇති ජංගම දුරකථනයක ගැටළුවක් ඇති විට, නව ජංගම දුරකථනයක් ලබාදීමට වහාම සලස්වනු නොලැබේ.</p>
+                              <p style="font-size: 10px; line-height: 16px; margin: 0;">1. අලුත්වැඩියාව සඳහා භාරදුන් ඔබගේ ජංගම දුරකථනය නැවත ලබා ගැනීමදී මෙම රිසිට්පත අනිවාර්යයෙන් ඉදිරිපත් කළ යුතුය.</p>
+                              <p style="font-size: 10px; line-height: 16px; margin: 0;">2. අලුත්වැඩියාව සදහා දෙනු ලබන දුරකථන දින 45 තුල නැවත රැගෙන යා යුතු අතර එම කාලයෙන් පසු අප ආයතනය විසින් ඒ සදහා වගකියනු නොලැබේ.</p>
                             </td>
                         </tr>
 

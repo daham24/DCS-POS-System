@@ -50,7 +50,7 @@
             </div>
             <div class="form-group">
                 <label for="barcode">Barcode</label>
-                <input type="text" name="barcode" id="barcode" class="form-control" required>
+                <input type="text" name="barcode" id="barcode" class="form-control">
             </div>
             <div class="form-group">
                 <label for="discount">Discount</label>

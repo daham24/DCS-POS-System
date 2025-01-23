@@ -37,20 +37,44 @@ function alertMessage(){
 }
 
 //Insert record using this function
-function insert($tableName, $data){
-
+function insert($tableName, $data) {
   global $conn;
 
+  // Validate table name
   $table = validate($tableName);
 
+  // Prepare columns and placeholders
   $columns = array_keys($data);
-  $values = array_values($data);
-
-  $finalColumn = implode(',', $columns);
-  $finalValues = "'" .implode("', '", $values)."'";
+  $placeholders = array_fill(0, count($data), '?'); // Generates placeholders like `?, ?, ?`
   
-  $query = "INSERT INTO $table ($finalColumn) VALUES ($finalValues)";
-  $result = mysqli_query($conn, $query);
+  // Prepare SQL query
+  $query = "INSERT INTO $table (" . implode(', ', $columns) . ") VALUES (" . implode(', ', $placeholders) . ")";
+  $stmt = mysqli_prepare($conn, $query);
+
+  if (!$stmt) {
+      die("Failed to prepare statement: " . mysqli_error($conn));
+  }
+
+  // Bind parameters dynamically
+  $types = ''; // Data type string for `bind_param`
+  $values = [];
+  foreach ($data as $value) {
+      $types .= is_null($value) ? 's' : (is_int($value) ? 'i' : 's'); // `i` for int, `s` for string
+      $values[] = $value;
+  }
+
+  // Bind parameters
+  mysqli_stmt_bind_param($stmt, $types, ...$values);
+
+  // Execute query
+  $result = mysqli_stmt_execute($stmt);
+
+  if (!$result) {
+      die("Failed to execute query: " . mysqli_stmt_error($stmt));
+  }
+
+  mysqli_stmt_close($stmt);
+
   return $result;
 }
 
