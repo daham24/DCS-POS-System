@@ -2,7 +2,7 @@
 
 <?php
 // Set the trial period expiry date
-$expiryDate = '2025-02-15'; // Update this date as needed
+$expiryDate = '2025-03-15'; // Update this date as needed
 $currentDate = date('Y-m-d');
 
 if ($currentDate > $expiryDate) {

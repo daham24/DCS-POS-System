@@ -29,7 +29,7 @@
         <input type="hidden" name="product_id" value="<?= $product['data']['id']; ?>"> 
         <div class="row">
           <div class="col-md-12 mb-3">
-            <label>Category Id</label>
+            <label>Category</label>
             <select name="category_id" class="form-select">
               <option value="">Select Category</option>
               <?php 
@@ -65,8 +65,16 @@
             <textarea name="description" class="form-control" rows="3"><?= htmlspecialchars($product['data']['description']); ?></textarea>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="">Price *</label>
-            <input type="text" name="price" required value="<?= htmlspecialchars($product['data']['price']); ?>" class="form-control" />
+            <label for="">Actual Price *</label>
+            <input type="number" name="price" required id="actual_price" value="<?= htmlspecialchars($product['data']['price']); ?>" class="form-control" oninput="calculateDiscount()"/>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="">Selling Price *</label>
+            <input type="number" name="sell_price" required id="selling_price" value="<?= htmlspecialchars($product['data']['sell_price']); ?>" class="form-control" oninput="calculateDiscount()"/>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="discount">Discount (%)</label>
+            <input type="number" step="0.01" name="discount" id="discount" value="<?= htmlspecialchars($product['data']['discount']); ?>" class="form-control" readonly />
           </div>
           <div class="col-md-4 mb-3">
             <label for="">Quantity *</label>
@@ -75,10 +83,6 @@
           <div class="col-md-4 mb-3">
             <label for="">Barcode *</label>
             <input type="text" name="barcode" required value="<?= htmlspecialchars($product['data']['barcode']); ?>" class="form-control" />
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="">Discount (%)</label>
-            <input type="number" step="0.01" name="discount" value="<?= htmlspecialchars($product['data']['discount']); ?>" class="form-control" />
           </div>
           <div class="col-md-4 mb-3">
             <label for="">Image</label>
@@ -112,3 +116,18 @@
 </div>
 
 <?php include('includes/footer.php'); ?>
+
+
+<script>
+  // Function to calculate the discount
+  function calculateDiscount() {
+    var actualPrice = parseFloat(document.getElementById('actual_price').value);
+    var sellingPrice = parseFloat(document.getElementById('selling_price').value);
+
+    // Ensure the values are numbers and calculate discount
+    if (!isNaN(actualPrice) && !isNaN(sellingPrice)) {
+      var discount = actualPrice - sellingPrice;
+      document.getElementById('discount').value = discount.toFixed(2); // Display discount with 2 decimal points
+    }
+  }
+</script>

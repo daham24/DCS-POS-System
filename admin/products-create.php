@@ -45,16 +45,20 @@
               <textarea name="description" class="form-control" rows="3"></textarea>
             </div>
             <div class="col-md-4 mb-3">
-              <label for="">Price *</label>
-              <input type="text" name="price" required class="form-control"/>
+              <label for="">Actual Price *</label>
+              <input type="number" name="price" required id="actual_price" class="form-control" oninput="calculateDiscount()"/>
             </div>
-            <div class="form-group">
+            <div class="col-md-4 mb-3">
+              <label for="">Selling Price *</label>
+              <input type="number" name="sell_price" required id="selling_price" class="form-control" oninput="calculateDiscount()"/>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="discount">Discount</label>
+                <input type="number" step="0.01" name="discount" id="discount" class="form-control" readonly>
+            </div>
+            <div class="col-md-4 mb-3">
                 <label for="barcode">Barcode</label>
                 <input type="text" name="barcode" id="barcode" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="discount">Discount</label>
-                <input type="number" step="0.01" name="discount" id="discount" class="form-control">
             </div>
             <div class="col-md-4 mb-3">
               <label for="">Quantity *</label>
@@ -65,7 +69,7 @@
               <input type="file" name="image" class="form-control"/>
             </div>
             <div class="col-md-6">
-              <label>Status (Uncheked=Visible, Checked=Hidden)</label>
+              <label>Status (Unchecked = Visible, Checked = Hidden)</label>
               <br>
               <input type="checkbox" name="status" style="width: 30px; height:30px";>
             </div>
@@ -84,3 +88,18 @@
 </div>
 
 <?php include('includes/footer.php');?>
+
+
+<script>
+  // Function to calculate the discount
+  function calculateDiscount() {
+    var actualPrice = parseFloat(document.getElementById('actual_price').value);
+    var sellingPrice = parseFloat(document.getElementById('selling_price').value);
+
+    // Ensure the values are numbers and calculate discount
+    if (!isNaN(actualPrice) && !isNaN(sellingPrice)) {
+      var discount = actualPrice - sellingPrice;
+      document.getElementById('discount').value = discount.toFixed(2); // Display discount with 2 decimal points
+    }
+  }
+</script>

@@ -154,6 +154,7 @@ if(isset($_POST['saveProduct']))
   $name = validate($_POST['name']);
   $description = validate($_POST['description']);
   $price = validate($_POST['price']);
+  $sell_price = validate($_POST['sell_price']);
   $quantity = validate($_POST['quantity']);
 
   if (!isset($_POST['barcode']) || empty($_POST['barcode'])) {
@@ -184,6 +185,7 @@ if(isset($_POST['saveProduct']))
     'name' => $name,
     'description' => $description,
     'price' => $price,
+    'sell_price' => $sell_price,
     'quantity' => $quantity,
     'barcode' => $barcode,  // Adding barcode
     'discount' => $discount, // Adding discount
@@ -213,6 +215,7 @@ if(isset($_POST['updateProduct']))
   $name = validate($_POST['name']);
   $description = validate($_POST['description']);
   $price = validate($_POST['price']);
+  $sell_price = validate($_POST['sell_price']);
   $quantity = validate($_POST['quantity']);
   $barcode = validate($_POST['barcode']); // New field
   $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0; // New field with default
@@ -242,6 +245,7 @@ if(isset($_POST['updateProduct']))
     'name' => $name,
     'description' => $description,
     'price' => $price,
+    'sell_price' => $sell_price,
     'quantity' => $quantity,
     'barcode' => $barcode,  // Adding barcode
     'discount' => $discount, // Adding discount

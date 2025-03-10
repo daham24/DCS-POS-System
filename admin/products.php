@@ -61,10 +61,11 @@
                 <th>ID</th>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Price</th>
+                <th>Actual Price</th>
+                <th>Selling Price</th>
+                <th>Discount</th>
                 <th>Quantity</th>
                 <th>Barcode</th>
-                <th>Discount</th>
                 <th>Status</th> 
                 <th>Action</th>
               </tr>
@@ -78,10 +79,12 @@
                     <img src="../<?= $item['image']?>" style="width:50px; height: 50px;" alt="Img">
                   </td>
                   <td><?= $item['name']?></td> 
-                  <td><?= $item['price']?></td>  
-                  <td><?= $item['quantity']?></td>
-                  <td><?= $item['barcode']?></td> <!-- Display barcode -->
-                  <td><?= $item['discount']?></td> <!-- Display discount -->
+                  <td><?= $item['price']?></td>
+                  <td><?= $item['sell_price']?></td>
+                  <td><?= $item['discount']?></td> 
+                  <td><?= $item['quantity']?></td>  
+                  <td><?= $item['barcode']?></td> 
+                  
                   <td>
                     <?php
                       if($item['status'] == 1){
