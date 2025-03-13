@@ -104,53 +104,110 @@ if (isset($_POST['updateAdmin'])) {
 }
 
 
-if(isset($_POST['saveCategory']))
-{
+if (isset($_POST['saveCategory'])) {
   $name = validate($_POST['name']);
   $description = validate($_POST['description']);
-  $status = isset($_POST['status']) == true ? 1:0;
+  $status = isset($_POST['status']) ? 1 : 0;
 
 
   $data = [
-    'name' => $name,
-    'description' => $description,
-    'status' => $status
+      'name' => $name,
+      'description' => $description,
+      'status' => $status
   ];
-  $result = insert('categories', $data);
-  if($result){
-    redirect('categories.php', 'Category Created Successfuly! ');
-  }else{
-    redirect('categories-create.php', 'Something Went Wrong! ');
-  }
 
+  $result = insert('categories', $data);
+
+  if ($result) {
+      redirect('categories.php', 'Category Created Successfully!');
+  } else {
+      redirect('category-create.php', 'Something Went Wrong!');
+  }
 }
 
-
-if(isset($_POST['updateCategory']))
-{
+if (isset($_POST['updateCategory'])) {
   $categoryId = validate($_POST['categoryId']);
 
   $name = validate($_POST['name']);
   $description = validate($_POST['description']);
-  $status = isset($_POST['status']) == true ? 1:0;
-
+  $status = isset($_POST['status']) ? 1 : 0;
 
   $data = [
-    'name' => $name,
-    'description' => $description,
-    'status' => $status
+      'name' => $name,
+      'description' => $description,
+      'status' => $status
   ];
+
   $result = update('categories', $categoryId, $data);
-  if($result){
-    redirect('categories-edit.php?id='.$categoryId, 'Category Updated Successfuly! ');
-  }else{
-    redirect('categories-edit.php?id='.$categoryId, 'Something Went Wrong! ');
+
+  if ($result) {
+      redirect('categories-edit.php?id=' . $categoryId, 'Category Updated Successfully!');
+  } else {
+      redirect('categories-edit.php?id=' . $categoryId, 'Something Went Wrong!');
+  }
+}
+
+if (isset($_POST['saveSubCategory'])) {
+  $categoryId = validate($_POST['categoryId']);
+  $name = validate($_POST['name']);
+  $status = isset($_POST['status']) ? 1 : 0;
+
+  // Validate categoryId
+  if (empty($categoryId) || !is_numeric($categoryId)) {
+    redirect('categories-create.php', 'Invalid category ID!');
+  }
+
+  $data = [
+      'name' => $name,
+      'category_id' => (int)$categoryId, // Ensure category_id is an integer
+      'status' => $status
+  ];
+
+  $result = insert('sub_categories', $data);
+
+  if ($result) {
+      redirect('categories.php', 'Sub Category Added Successfully!');
+  } else {
+      redirect('categories-create.php', 'Something Went Wrong!');
+  }
+}
+
+if (isset($_POST['updateSubCategory'])) {
+  $subCategoryId = validate($_POST['subCategoryId']);
+  $name = validate($_POST['name']);
+  $status = isset($_POST['status']) ? 1 : 0;
+
+  $data = [
+      'name' => $name,
+      'status' => $status
+  ];
+
+  $result = update('sub_categories', $subCategoryId, $data);
+
+  if ($result) {
+      redirect('categories.php?id=' . $paramValue, 'Sub Category Updated Successfully!');
+  } else {
+      redirect('categories-edit.php?id=' . $paramValue, 'Something Went Wrong!');
+  }
+}
+
+if (isset($_POST['deleteSubCategory'])) {
+  $subCategoryId = validate($_POST['subCategoryId']);
+
+  // Delete the subcategory
+  $result = delete('sub_categories', $subCategoryId);
+
+  if ($result) {
+      redirect('categories.php?id=' . $paramValue, 'Sub Category Deleted Successfully!');
+  } else {
+      redirect('categories-edit.php?id=' . $paramValue, 'Something Went Wrong!');
   }
 }
 
 if(isset($_POST['saveProduct']))
 {
   $category_id = validate($_POST['category_id']);
+  $sub_category_id = validate($_POST['sub_category_id']);
   $name = validate($_POST['name']);
   $description = validate($_POST['description']);
   $price = validate($_POST['price']);
@@ -182,6 +239,7 @@ if(isset($_POST['saveProduct']))
 
   $data = [
     'category_id' => $category_id,
+    'sub_category_id' => $sub_category_id, // Correct field name
     'name' => $name,
     'description' => $description,
     'price' => $price,
@@ -201,7 +259,6 @@ if(isset($_POST['saveProduct']))
     redirect('products-create.php', 'Something Went Wrong! ');
   }
 }
-
 
 if(isset($_POST['updateProduct']))
 {
@@ -254,7 +311,7 @@ if(isset($_POST['updateProduct']))
   ];
   $result = update('products', $product_id, $data);
   if($result){
-    redirect('products-edit.php?id='.$product_id, 'Product Updated Successfully! ');
+    redirect('products.php?id='.$product_id, 'Product Updated Successfully! ');
   }else{
     redirect('products-edit.php?id='.$product_id, 'Something Went Wrong! ');
   }
