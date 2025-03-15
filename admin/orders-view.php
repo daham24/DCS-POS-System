@@ -69,15 +69,6 @@
                           <span class="fw-bold"><?= $orderData['payment_mode']; ?></span>
                         </label>
                         <br>
-                        <label class="mb-1">
-                            IMEI Code: 
-                            <span class="fw-bold"><?= isset($orderData['imei_code']) ? $orderData['imei_code'] : 'Not Provided'; ?></span>
-                        </label>
-                        <br>
-                        <label class="mb-1">
-                            Warrenty Period: 
-                            <span class="fw-bold"><?= isset($orderData['warrenty_period']) ? $orderData['warrenty_period'] : 'Not Provided'; ?></span>
-                        </label>
                       </div>
                       <div class="col-md-6">
                         <h4>User Details</h4>
@@ -103,11 +94,11 @@
 
                   <?php 
                     $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, oi.discount as orderItemDiscount, 
-                                  o.*, p.name, p.image, p.discount as productDiscount
-                                  FROM orders as o 
-                                  INNER JOIN order_items as oi ON oi.order_id = o.id
-                                  INNER JOIN products as p ON p.id = oi.product_id
-                                  WHERE o.tracking_no = '$trackingNo'";
+                                        o.*, p.name, p.image, p.discount as productDiscount, p.warranty_period, p.imei_code
+                                        FROM orders as o 
+                                        INNER JOIN order_items as oi ON oi.order_id = o.id
+                                        INNER JOIN products as p ON p.id = oi.product_id
+                                        WHERE o.tracking_no = '$trackingNo'";
 
                       $orderItemsRes = mysqli_query($conn, $orderItemQuery);
                       if ($orderItemsRes) {
@@ -116,13 +107,15 @@
                       <h4 class="my-3">Order Items Details</h4>
                       <table class="table table-bordered table-striped">
                       <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Price (Rs.)</th>
-                        <th>Discount (Rs.)</th>
-                        <th>Quantity</th>
-                        <th>Total Price (Rs.)</th>
-                      </tr>
+                          <tr>
+                              <th>Product</th>
+                              <th>Price (Rs.)</th>
+                              <th>Discount (Rs.)</th>
+                              <th>Warranty</th> 
+                              <th>IMEI No.</th> 
+                              <th>Quantity</th>
+                              <th>Total Price (Rs.)</th>
+                          </tr>
                       </thead>
                       <tbody>
                       <?php 
@@ -152,6 +145,12 @@
                             <?= number_format($discount, 0); ?>
                           </td>
                           <td width="15%" class="fw-bold text-center">
+                              <?= $orderItemRow['warranty_period'] ?? 'N/A'; ?> 
+                          </td>
+                          <td width="15%" class="fw-bold text-center">
+                              <?= $orderItemRow['imei_code'] ?? 'N/A'; ?> 
+                          </td>
+                          <td width="15%" class="fw-bold text-center">
                             <?= $orderItemRow['orderItemQuantity']; ?>
                           </td>
                           <td width="15%" class="fw-bold text-center">
@@ -161,7 +160,7 @@
                       <?php endforeach; ?>
 
                       <tr>
-                        <td colspan="4" class="text-end fw-bold">Grand Total (Rs.):</td>
+                        <td colspan="6" class="text-end fw-bold">Grand Total (Rs.):</td>
                         <td class="text-end fw-bold">Rs: <?= number_format($grandTotal, 0); ?></td>
                       </tr>
                       </tbody>

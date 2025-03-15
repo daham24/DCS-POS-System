@@ -24,8 +24,8 @@
               <?php
             }
 
-            $orderQuery = "SELECT o.*, c.*, o.imei_code, o.warrenty_period FROM orders o, customers c 
-                            WHERE c.id=o.customer_id AND tracking_no='$trackingNo' LIMIT 1";
+            $orderQuery = "SELECT o.*, c.* FROM orders o, customers c 
+                          WHERE c.id=o.customer_id AND tracking_no='$trackingNo' LIMIT 1";
             $orderQueryRes = mysqli_query($conn, $orderQuery);
             if (!$orderQueryRes) {
               echo '<h5>Something Went Wrong!</h5>';
@@ -64,9 +64,7 @@
                       <h5 style="font-size: 12px; margin: 0;">Invoice Details</h5>
                       <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;">
                         <strong>Invoice No:</strong> <?= $orderDataRow['invoice_no']; ?><br>
-                        <strong>Date:</strong> <?= date('d M Y'); ?><br>
-                        <strong>IMEI:</strong> <?= $orderDataRow['imei_code']; ?><br>
-                        <strong>Warranty:</strong> <?= $orderDataRow['warrenty_period']; ?>
+                        <strong>Date:</strong> <?= date('d M Y'); ?>
                       </p>
                     </td>
                   </tr>
@@ -74,9 +72,10 @@
               </table>
 
               <?php
-              $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, p.discount as orderItemDiscount, o.*, oi.*, p.*
-                                  FROM orders o, order_items oi, products p
-                                  WHERE oi.order_id = o.id AND p.id = oi.product_id AND o.tracking_no = '$trackingNo'";
+              $orderItemQuery = "SELECT oi.quantity as orderItemQuantity, oi.price as orderItemPrice, p.discount as orderItemDiscount, 
+                                o.*, oi.*, p.*, p.warranty_period, p.imei_code
+                                FROM orders o, order_items oi, products p
+                                WHERE oi.order_id = o.id AND p.id = oi.product_id AND o.tracking_no = '$trackingNo'";
 
               $orderItemQueryRes = mysqli_query($conn, $orderItemQuery);  
               if ($orderItemQueryRes && mysqli_num_rows($orderItemQueryRes) > 0) {
@@ -84,14 +83,16 @@
                 <!-- Items Table -->
                 <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 12px;">
                   <thead>
-                    <tr style="text-align: left;">
-                      <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">ID</th>
-                      <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Product Name</th>
-                      <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Price </th>
-                      <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Discount </th>
-                      <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Quantity</th>
-                      <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Total</th>
-                    </tr>
+                      <tr style="text-align: left;">
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">ID</th>
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Product Name</th>
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Price</th>
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Discount</th>
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Warranty</th> 
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">IMEI No.</th> 
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Quantity</th>
+                          <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Total</th>
+                      </tr>
                   </thead>
                   <tbody>
                     <?php 
@@ -106,12 +107,14 @@
                         <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $row['name']; ?></td>
                         <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= number_format($row['orderItemPrice'], 2); ?></td>
                         <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= number_format($row['orderItemDiscount'], 2); ?></td>
+                        <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $row['warranty_period'] ?? 'N/A'; ?></td> 
+                        <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $row['imei_code'] ?? 'N/A'; ?></td> 
                         <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $row['orderItemQuantity']; ?></td>
                         <td style="border-bottom: 1px solid #ccc; padding: 5px; font-weight: bold;"><?= number_format($totalPrice, 2); ?></td>
                       </tr>
                       <?php } ?>
                       <tr>
-                        <td colspan="5" style="text-align: right; padding: 5px; font-weight: bold;">Grand Total:</td>
+                        <td colspan="7" style="text-align: right; padding: 5px; font-weight: bold;">Grand Total:</td>
                         <td style="font-size:18px; color:#e55300; padding: 5px; font-weight: bold; "><?= number_format($grandTotal, 2); ?></td>
                       </tr>
                       <tr>
@@ -146,7 +149,7 @@
                 </div>
 
                 <!-- Footer Section -->
-                <div  style="background-color: #333; color: #fff; padding:10px 15px; margin-top: 80px; font-size: 10px;">
+                <div  style="background-color: #0077b6; color: #fff; padding:10px 15px; margin-top: 80px; font-size: 10px;">
                   <div style="display: flex; justify-content: space-between; align-items: center;">
                     <!-- Web and Email -->
                     <div style="flex: 1;">

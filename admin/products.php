@@ -68,7 +68,9 @@
               <th>Selling Price</th>
               <th>Discount</th>
               <th>Quantity</th>
+              <th>Warranty</th>
               <th>Barcode</th>
+              <th>IMEI No.</th>
               <th>Status</th> 
               <th>Action</th>
             </tr>
@@ -86,7 +88,9 @@
                 <td><?= $item['sell_price']; ?></td>
                 <td><?= $item['discount']; ?></td>
                 <td><span class="badge bg-dark"><?= $item['quantity']; ?></span></td>
+                <td><?= $item['warranty_period']; ?></td>
                 <td><?= $item['barcode']; ?></td>
+                <td><?= $item['imei_code']; ?></td>
                 <td>
                   <?php
                   if ($item['status'] == 1) {

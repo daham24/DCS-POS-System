@@ -96,12 +96,11 @@
     <div class="card-body" id="productArea">
       
       <?php 
-        if(isset($_SESSION['productItems']))
-        {
 
+        if (isset($_SESSION['productItems'])) {
           $sessionProducts = $_SESSION['productItems'];
 
-          if(empty($sessionProducts)){
+          if (empty($sessionProducts)) {
             unset($_SESSION['productItems']);
             unset($_SESSION['productItemIds']);
           }
@@ -113,6 +112,8 @@
                 <tr>
                   <th>Id</th>
                   <th>Product Name</th>
+                  <th>Category</th> <!-- New Column -->
+                  <th>Subcategory</th> <!-- New Column -->
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Total Price</th>
@@ -121,12 +122,14 @@
               </thead>
               <tbody id="itemTableBody">
                 <?php 
-                    $i = 1;
-                    foreach($sessionProducts as $key => $item) : 
+                  $i = 1;
+                  foreach ($sessionProducts as $key => $item) : 
                 ?>
                 <tr>
                   <td><?= $i++; ?></td>
                   <td><?= $item['name']; ?></td>
+                  <td><?= $item['category_name'] ?? 'N/A'; ?></td> <!-- Display Category Name (or 'N/A' if missing) -->
+                  <td><?= $item['subcategory_name'] ?? 'N/A'; ?></td> <!-- Display Subcategory Name (or 'N/A' if missing) -->
                   <td><?= $item['price']; ?></td>
                   <td>
                     <div class="input-group qtyBox">
@@ -150,16 +153,6 @@
           <div class="mt-2">
             <hr>
             <div class="row">
-              <div class="col-md-4 mb-3">
-                  <label for="imei_code">Enter IMEI Code (optional)</label>
-                  <input type="text" class="form-control" id="imei_code" name="imei_code" placeholder="IMEI Code">
-              </div>
-              <div class="col-md-4 mb-3">
-                  <label for="imei_code">Warranty Period</label>
-                  <input type="text" class="form-control" id="warrenty_period" name="warrenty_period" placeholder="Warranty Period">
-              </div>
-            </div>
-            <div class="row">
                 <div class="col-md-4">
                   <label>Select Payment Mode</label>
                   <select id="payment_mode" name="payment_mode" class="form-select">
@@ -179,8 +172,7 @@
             </div>
           </div>
           <?php
-        }    
-        else{
+        } else {
           echo '<h5>No Items added</h5>';
         } 
       ?>

@@ -65,10 +65,18 @@
             <input type="text" name="barcode" id="barcode" class="form-control">
           </div>
           <div class="col-md-4 mb-3">
+            <label for="imei_code">IMEI No.</label>
+            <input type="text" name="imei_code" id="imei_code" class="form-control">
+          </div>
+          <div class="col-md-2 mb-3">
             <label for="">Quantity *</label>
             <input type="text" name="quantity" required class="form-control"/>
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-2 mb-3">
+            <label for="">Warranty Period</label>
+            <input type="text" name="warranty_period" required class="form-control"/>
+          </div>
+          <div class="col-md-12 mb-3">
             <label for="">Image </label>
             <input type="file" name="image" class="form-control"/>
           </div>

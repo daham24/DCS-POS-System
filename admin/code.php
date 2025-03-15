@@ -219,8 +219,15 @@ if(isset($_POST['saveProduct']))
   } else {
       $barcode = validate($_POST['barcode']);
   }
+
+  if (!isset($_POST['imei_code']) || empty($_POST['imei_code'])) {
+    $imei_code = null; 
+  } else {
+      $imei_code = validate($_POST['imei_code']);
+  }
   
-  $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0; // New field with default
+  $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0; 
+  $warranty_period = isset($_POST['warranty_period']) ? validate($_POST['warranty_period']) : 0; 
   $status = isset($_POST['status']) == true ? 1 : 0;
 
   if($_FILES['image']['size'] > 0)
@@ -246,7 +253,9 @@ if(isset($_POST['saveProduct']))
     'sell_price' => $sell_price,
     'quantity' => $quantity,
     'barcode' => $barcode,  // Adding barcode
+    'imei_code' => $imei_code,
     'discount' => $discount, // Adding discount
+    'warranty_period' => $warranty_period,
     'image' => $finalImage,
     'status' => $status
   ];
@@ -274,8 +283,10 @@ if(isset($_POST['updateProduct']))
   $price = validate($_POST['price']);
   $sell_price = validate($_POST['sell_price']);
   $quantity = validate($_POST['quantity']);
-  $barcode = validate($_POST['barcode']); // New field
-  $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0; // New field with default
+  $barcode = validate($_POST['barcode']); 
+  $imei_code = validate($_POST['imei_code']);
+  $discount = isset($_POST['discount']) ? validate($_POST['discount']) : 0;
+  $warranty_period = isset($_POST['warranty_period']) ? validate($_POST['warranty_period']) : 0;  
   $status = isset($_POST['status']) == true ? 1 : 0;
 
   if($_FILES['image']['size'] > 0)
@@ -305,7 +316,9 @@ if(isset($_POST['updateProduct']))
     'sell_price' => $sell_price,
     'quantity' => $quantity,
     'barcode' => $barcode,  // Adding barcode
+    'imei_code' => $imei_code,
     'discount' => $discount, // Adding discount
+    'warranty_period' => $warranty_period,
     'image' => $finalImage,
     'status' => $status
   ];

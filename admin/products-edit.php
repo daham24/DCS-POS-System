@@ -106,14 +106,22 @@
             <input type="number" step="0.01" name="discount" id="discount" value="<?= htmlspecialchars($product['data']['discount'] ?? ''); ?>" class="form-control" readonly />
           </div>
           <div class="col-md-4 mb-3">
-            <label for="">Quantity *</label>
-            <input type="text" name="quantity" required value="<?= htmlspecialchars($product['data']['quantity'] ?? ''); ?>" class="form-control" />
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="">Barcode *</label>
+            <label for="">Barcode </label>
             <input type="text" name="barcode" required value="<?= htmlspecialchars($product['data']['barcode'] ?? ''); ?>" class="form-control" />
           </div>
           <div class="col-md-4 mb-3">
+            <label for="">IMEI No </label>
+            <input type="text" name="imei_code" required value="<?= htmlspecialchars($product['data']['imei_code'] ?? ''); ?>" class="form-control" />
+          </div>
+          <div class="col-md-2 mb-3">
+            <label for="">Quantity *</label>
+            <input type="text" name="quantity" required value="<?= htmlspecialchars($product['data']['quantity'] ?? ''); ?>" class="form-control" />
+          </div>
+          <div class="col-md-2 mb-3">
+            <label for="">Warranty </label>
+            <input type="text" name="warranty_period" required value="<?= htmlspecialchars($product['data']['warranty_period'] ?? ''); ?>" class="form-control" />
+          </div>
+          <div class="col-md-12 mb-3">
             <label for="">Image</label>
             <input type="file" name="image" class="form-control" />
             <img src="../<?= htmlspecialchars($product['data']['image'] ?? ''); ?>" style="width: 40px; height:40px;" alt="Img" />

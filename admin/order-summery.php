@@ -90,8 +90,6 @@ if (!isset($_SESSION['productItems'])) {
                                     <h5 style="font-size: 12px; margin: 0;">Invoice Details</h5>
                                     <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Invoice No:</strong> <?= $invoiceNo ?></p>
                                     <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Date:</strong> <?= date('d M Y') ?></p>
-                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>IMEI:</strong> <?= isset($_SESSION['imei_code']) ? $_SESSION['imei_code'] : 'Not Provided'; ?></p>
-                                    <p style="margin: 5px 0; font-size: 10px; line-height: 1.5;"><strong>Warranty:</strong> <?= isset($_SESSION['warrenty_period']) ? $_SESSION['warrenty_period'] : 'Not Provided'; ?></p>
                                   </td>
                                 </tr>
                               </tbody>
@@ -122,10 +120,12 @@ if (!isset($_SESSION['productItems'])) {
                               <tr style="text-align: left;">
                                   <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" width="5%">ID</th>
                                   <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Product Name</th>
-                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Price</th>
-                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Discount</th>
-                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Quantity</th>
-                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;" >Total</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Price</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Discount</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Warranty</th> <!-- New Column -->
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">IMEI Code</th> <!-- New Column -->
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Quantity</th>
+                                  <th style="background-color:#e9ecef; border-bottom: 1px solid #e9ecef; padding: 5px;">Total</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -156,6 +156,8 @@ if (!isset($_SESSION['productItems'])) {
                                   <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $item['name']; ?></td>
                                   <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= number_format($item['price'], 2); ?></td>
                                   <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= number_format($discount, 2); ?></td>
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $item['warranty_period'] ?? 'N/A'; ?></td> <!-- Warranty Period -->
+                                  <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $item['imei_code'] ?? 'N/A'; ?></td> <!-- IMEI Code -->
                                   <td style="border-bottom: 1px solid #ccc; padding: 5px;"><?= $item['quantity']; ?></td>
                                   <td style="border-bottom: 1px solid #ccc; padding: 5px;">
                                       <?= number_format($totalPrice, 2); ?>
@@ -163,7 +165,7 @@ if (!isset($_SESSION['productItems'])) {
                               </tr>
                               <?php } ?>
                               <tr>
-                                  <td colspan="5" align="end" style="text-align: right; padding: 5px; font-weight: bold;">Grand Total:</td>
+                                  <td colspan="7" align="end" style="text-align: right; padding: 5px; font-weight: bold;">Grand Total:</td>
                                   <td colspan="1" style="font-size:18px; color:#e55300; padding: 5px; font-weight: bold; "> <?= number_format($grandTotal, 2); ?></td>
                               </tr>
                               <tr>
@@ -196,7 +198,7 @@ if (!isset($_SESSION['productItems'])) {
                         </div>
 
                         <!-- Footer Section -->
-                        <div style="background-color: #333; color: #fff; padding:10px 15px; margin-top: 50px; font-size: 10px;">
+                        <div style="background-color: #0077b6; color: #fff; padding:10px 15px; margin-top: 50px; font-size: 10px;">
                           <div style="display: flex; justify-content: space-between; align-items: center;">
                             <!-- Web and Email -->
                             <div style="flex: 1;">
