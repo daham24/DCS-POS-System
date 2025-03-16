@@ -164,7 +164,6 @@ if ($currentDate > $expiryDate) {
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Price</th>
@@ -174,7 +173,6 @@ if ($currentDate > $expiryDate) {
                 <tbody>
                 <?php while ($row = mysqli_fetch_assoc($resultUnavailableItems)): ?>
                     <tr>
-                    <td><?= $row['id']; ?></td>
                     <td><?= $row['product_name']; ?></td>
                     <td><?= $row['category_name']; ?></td>
                     <td><?= number_format($row['price'], 2); ?></td>

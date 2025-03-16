@@ -61,7 +61,6 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Item Name</th>
                                 <th>Customer</th>
                                 <th>Physical Condition</th>
@@ -74,7 +73,6 @@
                         <tbody>
                             <?php while ($repair = mysqli_fetch_assoc($repairs)) { ?>
                                 <tr>
-                                    <td><?= $repair['id']; ?></td>
                                     <td><?= $repair['item_name']; ?></td>
                                     <td>
                                         <?= $repair['customer_name']; ?> <br>

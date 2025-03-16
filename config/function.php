@@ -168,7 +168,7 @@ function getById($tableName, $id) {
 function delete($tableName, $id){
 
   global $conn;
-
+  
   $table = validate($tableName);
   $status = validate($id);
 

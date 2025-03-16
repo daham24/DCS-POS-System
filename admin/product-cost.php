@@ -7,6 +7,17 @@ $editData = null;
 // Fetch all products for the dropdown
 $products = mysqli_query($conn, "SELECT id, name FROM products");
 
+// Fetch product cost data when edit_id is set
+if (isset($_GET['edit_id'])) {
+    $edit_id = $_GET['edit_id'];
+    $editQuery = "SELECT * FROM products_cost WHERE id = '$edit_id'";
+    $editResult = mysqli_query($conn, $editQuery);
+
+    if (mysqli_num_rows($editResult) > 0) {
+        $editData = mysqli_fetch_assoc($editResult);
+    }
+}
+
 // Fetch all product cost records with search functionality
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $query = "
@@ -59,8 +70,11 @@ $productCosts = mysqli_query($conn, $query);
               </div>
               <div class="col-md-2 mb-3">
                   <label for="date">Date</label>
-                  <input type="date" name="date" class="form-control" value="<?= $editData ? $editData['date'] : date('Y-m-d'); ?>" readonly>
+                  <input type="date" name="date" class="form-control" 
+                        value="<?= $editData && $editData['date'] ? $editData['date'] : date('Y-m-d'); ?>" 
+                        readonly>
               </div>
+
               <div class="col-md-1 mb-3 text-end">
                   <br />
                   <button type="submit" name="<?= $editData ? 'updateCost' : 'saveCost'; ?>" class="btn btn-primary">
@@ -132,3 +146,21 @@ $productCosts = mysqli_query($conn, $query);
 </div>
 
 <?php include('includes/footer.php'); ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const quantityInput = document.querySelector('input[name="quantity"]');
+    const unitPriceInput = document.querySelector('input[name="unit_price"]');
+    const totalCostInput = document.querySelector('input[name="total_cost"]');
+
+    // Calculate total cost automatically
+    function calculateTotalCost() {
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const unitPrice = parseFloat(unitPriceInput.value) || 0;
+        totalCostInput.value = (quantity * unitPrice).toFixed(2);
+    }
+
+    quantityInput.addEventListener('input', calculateTotalCost);
+    unitPriceInput.addEventListener('input', calculateTotalCost);
+});
+</script>

@@ -101,7 +101,7 @@
                 <div class="col-md-4 mb-3 text-end">
                   <br>
                   <button type="submit" name="updateSubCategory" class="btn btn-outline-dark">Update</button>
-                  <button type="submit" name="deleteSubCategory" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this subcategory?')">Delete</button>
+                  <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" onclick="setDeleteId(<?= $subCategory['id']; ?>)">Delete</button>
                 </div>
               </div>
             </form>
@@ -148,4 +148,66 @@
 
 
 <?php include('includes/footer.php');?>
+
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this subcategory?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="confirmDeleteButton" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Set the subcategory ID to delete
+let deleteSubCategoryId = null;
+
+function setDeleteId(id) {
+  deleteSubCategoryId = id;
+}
+
+// Handle the delete confirmation
+document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+  if (deleteSubCategoryId) {
+    // Submit the form with the delete action
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'code.php';
+
+    const subCategoryIdInput = document.createElement('input');
+    subCategoryIdInput.type = 'hidden';
+    subCategoryIdInput.name = 'subCategoryId';
+    subCategoryIdInput.value = deleteSubCategoryId;
+
+    const categoryIdInput = document.createElement('input');
+    categoryIdInput.type = 'hidden';
+    categoryIdInput.name = 'categoryId';
+    categoryIdInput.value = <?= $paramValue; ?>;
+
+    const deleteActionInput = document.createElement('input');
+    deleteActionInput.type = 'hidden';
+    deleteActionInput.name = 'deleteSubCategory';
+    deleteActionInput.value = '1';
+
+    form.appendChild(subCategoryIdInput);
+    form.appendChild(categoryIdInput);
+    form.appendChild(deleteActionInput);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+});
+</script>
 

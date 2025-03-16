@@ -90,7 +90,7 @@
                 </div>
 
 
-                <a class="nav-link <?= ($page == 'admins-create.php') || ($page == 'admins.php') ? 'collapse active' : 'collapsed'; ?>" href="#" 
+                <a class="nav-link <?= ($page == 'customers-create.php') || ($page == 'customers.php') ? 'collapse active' : 'collapsed'; ?>" href="#" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#collapseCustomers" 
                     aria-expanded="false" aria-controls="collapseCustomers"
@@ -103,6 +103,23 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link <?= $page == 'customers-create.php' ? 'active' : ''; ?>" href="customers-create.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >Add Customer</a>
                         <a class="nav-link <?= $page == 'customers.php' ? 'active' : ''; ?>" href="customers.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >View Customers</a>
+                    </nav>
+                </div>
+
+
+                <a class="nav-link <?= ($page == 'supplier-create.php') || ($page == 'suppliers.php') ? 'collapse active' : 'collapsed'; ?>" href="#" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#collapseSuppliers" 
+                    aria-expanded="false" aria-controls="collapseSuppliers"
+                    <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    Suppliers
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse <?= ($page == 'supplier-create.php') || ($page == 'suppliers.php') ? 'show' : ''; ?>" id="collapseSuppliers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link <?= $page == 'supplier-create.php' ? 'active' : ''; ?>" href="supplier-create.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >Add Supplier</a>
+                        <a class="nav-link <?= $page == 'suppliers.php' ? 'active' : ''; ?>" href="suppliers.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >View Suppliers</a>
                     </nav>
                 </div>
             </div>

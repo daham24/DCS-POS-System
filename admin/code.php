@@ -1,6 +1,6 @@
-<?php 
+<?php include('../config/function.php');?>
 
-include('../config/function.php');
+<?php
 
 if(isset($_POST['saveAdmin']))
 {
@@ -193,14 +193,27 @@ if (isset($_POST['updateSubCategory'])) {
 
 if (isset($_POST['deleteSubCategory'])) {
   $subCategoryId = validate($_POST['subCategoryId']);
+  $categoryId = validate($_POST['categoryId']);
 
-  // Delete the subcategory
-  $result = delete('sub_categories', $subCategoryId);
+  if ($subCategoryId != '' && $categoryId != '') {
+    // Use prepared statements to prevent SQL injection
+    $query = "DELETE FROM sub_categories WHERE id=?";
+    $stmt = mysqli_prepare($conn, $query);
+    if ($stmt) {
+      mysqli_stmt_bind_param($stmt, "i", $subCategoryId);
+      mysqli_stmt_execute($stmt);
 
-  if ($result) {
-      redirect('categories.php?id=' . $paramValue, 'Sub Category Deleted Successfully!');
+      if (mysqli_stmt_affected_rows($stmt) > 0) {
+        redirect('categories-edit.php?id=' . $categoryId, 'Subcategory Deleted Successfully!');
+      } else {
+        redirect('categories-edit.php?id=' . $categoryId, 'Subcategory not found or already deleted.');
+      }
+      mysqli_stmt_close($stmt);
+    } else {
+      redirect('categories-edit.php?id=' . $categoryId, 'Something Went Wrong.');
+    }
   } else {
-      redirect('categories-edit.php?id=' . $paramValue, 'Something Went Wrong!');
+    redirect('categories-edit.php?id=' . $categoryId, 'Invalid request.');
   }
 }
 
@@ -400,7 +413,7 @@ if(isset($_POST['updateCustomer']))
     
     if($result)
     {
-      redirect('customers-edit.php?id='.$customerId, 'Customer Updated Successfully!');
+      redirect('customers.php?id='.$customerId, 'Customer Updated Successfully!');
     }else
     {
       redirect('customers-edit.php?id='.$customerId, 'Something Went Wrong.');
@@ -414,6 +427,151 @@ if(isset($_POST['updateCustomer']))
 }
 
 
+if (isset($_POST['saveSupplier'])) {
+  $name = validate($_POST['name']);
+  $email = !empty($_POST['email']) ? validate($_POST['email']) : null; // Allow null
+  $phone = validate($_POST['phone']);
+  $status = isset($_POST['status']) ? 1 : 0;
+  $products = isset($_POST['products']) ? $_POST['products'] : []; // Get selected products
+
+  if ($name != '') {
+    // Check if email is provided and already exists
+    if ($email !== null) {
+      $emailCheck = mysqli_query($conn, "SELECT * FROM suppliers WHERE email='$email'");
+      if ($emailCheck && mysqli_num_rows($emailCheck) > 0) {
+        redirect('suppliers.php', 'Email already used by another supplier.');
+      }
+    }
+
+    // Insert supplier
+    $data = [
+      'name' => $name,
+      'email' => $email,
+      'phone' => $phone,
+      'status' => $status
+    ];
+    $supplierId = insert('suppliers', $data);
+
+    if ($supplierId) {
+      // Insert supplier-product relationships
+      foreach ($products as $productId) {
+        $productId = validate($productId);
+        mysqli_query($conn, "INSERT INTO supplier_products (supplier_id, product_id) VALUES ('$supplierId', '$productId')");
+      }
+      redirect('suppliers.php', 'Supplier Created Successfully!');
+    } else {
+      redirect('suppliers.php', 'Something Went Wrong.');
+    }
+  } else {
+    redirect('suppliers.php', 'Please fill required fields.');
+  }
+}
+
+if (isset($_POST['updateSupplier'])) {
+  $supplierId = validate($_POST['supplierId']);
+  $name = validate($_POST['name']);
+  $email = !empty($_POST['email']) ? validate($_POST['email']) : null; // Allow null
+  $phone = validate($_POST['phone']);
+  $status = isset($_POST['status']) ? 1 : 0;
+
+  if ($name != '') {
+    // Check if email is provided and already exists (excluding current supplier)
+    if ($email !== null) {
+      $emailCheck = mysqli_query($conn, "SELECT * FROM suppliers WHERE email='$email' AND id!='$supplierId'");
+      if ($emailCheck && mysqli_num_rows($emailCheck) > 0) {
+        redirect('supplier-edit.php?id=' . $supplierId, 'Email already used by another supplier.');
+      }
+    }
+
+    // Update supplier
+    $data = [
+      'name' => $name,
+      'email' => $email,
+      'phone' => $phone,
+      'status' => $status
+    ];
+    $result = update('suppliers', $supplierId, $data);
+
+    if ($result) {
+      redirect('supplier-edit.php?id=' . $supplierId, 'Supplier Updated Successfully!');
+    } else {
+      redirect('supplier-edit.php?id=' . $supplierId, 'Something Went Wrong.');
+    }
+  } else {
+    redirect('supplier-edit.php?id=' . $supplierId, 'Please fill required fields.');
+  }
+}
+
+if (isset($_POST['saveSupplierProduct'])) {
+  $supplierId = validate($_POST['supplierId']);
+  $productId = validate($_POST['productId']);
+
+  if ($supplierId != '' && $productId != '') {
+    $query = "INSERT INTO supplier_products (supplier_id, product_id) VALUES ('$supplierId', '$productId')";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+      redirect('supplier-edit.php?id=' . $supplierId, 'Product Added Successfully!');
+    } else {
+      redirect('supplier-edit.php?id=' . $supplierId, 'Something Went Wrong.');
+    }
+  } else {
+    redirect('supplier-edit.php?id=' . $supplierId, 'Please fill required fields.');
+  }
+}
+
+if (isset($_POST['updateSupplierProduct'])) {
+  $supplierProductId = validate($_POST['supplierProductId']);
+  $productId = validate($_POST['productId']);
+  $supplierId = validate($_POST['supplierId']); // Add supplierId
+
+  if ($supplierProductId != '' && $productId != '' && $supplierId != '') {
+    // Use prepared statements to prevent SQL injection
+    $query = "UPDATE supplier_products SET product_id=? WHERE id=?";
+    $stmt = mysqli_prepare($conn, $query);
+    if ($stmt) {
+      mysqli_stmt_bind_param($stmt, "ii", $productId, $supplierProductId);
+      mysqli_stmt_execute($stmt);
+
+      if (mysqli_stmt_affected_rows($stmt) > 0) {
+        redirect('supplier-edit.php?id=' . $supplierId, 'Product Updated Successfully!');
+      } else {
+        redirect('supplier-edit.php?id=' . $supplierId, 'No changes made or product not found.');
+      }
+      mysqli_stmt_close($stmt);
+    } else {
+      redirect('supplier-edit.php?id=' . $supplierId, 'Something Went Wrong.');
+    }
+  } else {
+    redirect('supplier-edit.php?id=' . $supplierId, 'Please fill required fields.');
+  }
+}
+
+if (isset($_POST['deleteSupplierProduct'])) {
+  $supplierProductId = validate($_POST['supplierProductId']);
+  $supplierId = validate($_POST['supplierId']);
+
+  if ($supplierProductId != '' && $supplierId != '') {
+    // Use prepared statements to prevent SQL injection
+    $query = "DELETE FROM supplier_products WHERE id=?";
+    $stmt = mysqli_prepare($conn, $query);
+    if ($stmt) {
+      mysqli_stmt_bind_param($stmt, "i", $supplierProductId);
+      mysqli_stmt_execute($stmt);
+
+      if (mysqli_stmt_affected_rows($stmt) > 0) {
+        redirect('supplier-edit.php?id=' . $supplierId, 'Product Deleted Successfully!');
+      } else {
+        redirect('supplier-edit.php?id=' . $supplierId, 'Product not found or already deleted.');
+      }
+      mysqli_stmt_close($stmt);
+    } else {
+      redirect('supplier-edit.php?id=' . $supplierId, 'Something Went Wrong.');
+    }
+  } else {
+    redirect('supplier-edit.php?id=' . $supplierId, 'Invalid request.');
+  }
+}
 
 if (isset($_POST['updateRepair'])) {
   // Validate input data

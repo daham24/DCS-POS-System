@@ -24,7 +24,6 @@
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th> <!-- New column for is_ban -->
@@ -35,7 +34,6 @@
               
                 <?php foreach($admins as $adminItem) : ?>
                 <tr>
-                  <td><?= $adminItem['id']?></td>
                   <td><?= $adminItem['name']?></td>
                   <td><?= $adminItem['email']?></td>
                   <td>

@@ -44,7 +44,6 @@
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Email Id</th>
                 <th>Phone</th>
@@ -56,7 +55,6 @@
               
                 <?php foreach($customers as $item) : ?>
                 <tr>
-                  <td><?= $item['id']?></td>
                   <td><?= $item['name']?></td>  
                   <td><?= $item['email']?></td>  
                   <td><?= $item['phone']?></td>           
