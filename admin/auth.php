@@ -39,6 +39,7 @@ if (isset($_SESSION['loggedIn'])) {
             'repairs.php',
             'repairs-view.php',
             'repairs-view-print.php',
+            'products.php'
         ];
 
         // Access control logic

@@ -66,12 +66,22 @@ $(document).ready(function () {
     var payment_mode = $("#payment_mode").val();
 
     if (payment_mode == "") {
-      swal("Select Payment Mode", "Select your payment mode", "warning");
+      Swal.fire({
+        title: "Select Payment Mode",
+        text: "Select your payment mode",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
       return false;
     }
 
     if (cphone == "" || !$.isNumeric(cphone)) {
-      swal("Enter Phone Number", "Enter a valid phone number", "warning");
+      Swal.fire({
+        title: "Enter Phone Number",
+        text: "Enter a valid phone number",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
       return false;
     }
 
@@ -90,28 +100,29 @@ $(document).ready(function () {
         if (res.status == 200) {
           window.location.href = "order-summery.php";
         } else if (res.status == 404) {
-          swal(res.message, res.message, res.status_type, {
-            buttons: {
-              catch: {
-                text: "ADD Customer",
-                value: "catch",
-              },
-              cancel: "Cancel",
-            },
-          }).then((value) => {
-            switch (value) {
-              case "catch":
-                $("#c_phone").val(cphone);
-                $("#addCustomerModal").modal("show");
-                break;
-              default:
-                // Handle cancel
-                $("#addCustomerModal").modal("hide");
-                break;
+          Swal.fire({
+            title: res.message,
+            text: res.message,
+            icon: res.status_type,
+            showCancelButton: true,
+            confirmButtonText: "Add Customer",
+            cancelButtonText: "Cancel",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $("#c_phone").val(cphone);
+              $("#addCustomerModal").modal("show");
+            } else {
+              // Handle cancel
+              $("#addCustomerModal").modal("hide");
             }
           });
         } else {
-          swal(res.message, res.message, res.status_type);
+          Swal.fire({
+            title: res.message,
+            text: res.message,
+            icon: res.status_type,
+            confirmButtonText: "OK",
+          });
         }
       },
     });

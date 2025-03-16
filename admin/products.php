@@ -101,14 +101,19 @@
                   ?>
                 </td>
                 <td>
-                  <a href="products-edit.php?id=<?= $item['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                  <a 
-                    href="products-delete.php?id=<?= $item['id']; ?>" 
-                    class="btn btn-danger btn-sm"
-                    onclick="return confirm('Are you sure you want to delete this product?')"
-                  >
-                    Delete
-                  </a>
+                    <a 
+                        href="products-edit.php?id=<?= $item['id']; ?>" 
+                        class="btn btn-success btn-sm <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>"
+                    >
+                        Edit
+                    </a>
+                    <a 
+                        href="products-delete.php?id=<?= $item['id']; ?>" 
+                        class="btn btn-danger btn-sm <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>"
+                        onclick="return confirm('Are you sure you want to delete this product?')"
+                    >
+                        Delete
+                    </a>
                 </td>
               </tr>
             <?php endforeach; ?>
