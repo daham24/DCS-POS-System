@@ -71,6 +71,13 @@
                     </nav>
                 </div>
 
+                <div class="sb-sidenav-menu-heading">Analytics</div>
+
+                <a class="nav-link <?= $page == 'order-summery-view.php' ? 'active' : ''; ?>" href="order-summery-view.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                    Summery
+                </a>
+
                 <div class="sb-sidenav-menu-heading">Manage Users</div>
 
                 <a class="nav-link <?= ($page == 'admins-create.php') || ($page == 'admins.php') ? 'collapse active' : 'collapsed'; ?>" href="#" 

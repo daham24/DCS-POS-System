@@ -35,5 +35,16 @@ if (isset($_POST['saveCost']) || isset($_POST['updateCost'])) {
     }
 }
 
+// Delete Product Cost by ID
+if (isset($_GET['delete_id'])) {
+    $delete_id = $_GET['delete_id'];
+    $query = "DELETE FROM products_cost WHERE id = '$delete_id'";
+    
+    if (mysqli_query($conn, $query)) {
+        header("Location: product-cost.php?message=Product cost deleted successfully!");
+    } else {
+        header("Location: product-cost.php?message=Error: " . mysqli_error($conn));
+    }
+}
 
 ?>

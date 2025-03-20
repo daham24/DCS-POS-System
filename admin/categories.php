@@ -1,4 +1,4 @@
-<?php include('includes/header.php');?>
+<?php include('includes/header.php'); ?>
 
 <div class="container-fluid px-4">
     
@@ -45,7 +45,13 @@
                   </td>
                   <td>
                     <a href="categories-edit.php?id=<?=$item['id']?>" class="btn btn-success btn-sm">Edit</a>
-                    <a href="categories-delete.php?id=<?=$item['id']?>" class="btn btn-danger btn-sm">Delete</a>
+                    <a 
+                        href="categories-delete.php?id=<?= $item['id']; ?>" 
+                        class="btn btn-danger btn-sm delete-btn" 
+                        data-delete-url="categories-delete.php?id=<?= $item['id']; ?>"
+                    >
+                        Delete
+                    </a>
                   </td>
                 </tr>
                 <?php endforeach; ?>
@@ -135,30 +141,35 @@
         ?>
     </div>
   </div>
-
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this subcategory?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <form id="deleteForm" method="POST" action="code.php" style="display: inline;">
-          <input type="hidden" name="subCategoryId" id="subCategoryId">
-          <button type="submit" name="deleteSubCategory" class="btn btn-danger">Delete</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
   
 </div>
 
-<?php include('includes/footer.php');?>
+<?php include('includes/footer.php'); ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // SweetAlert for delete confirmation (only for categories)
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            const deleteUrl = this.getAttribute('data-delete-url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Redirect to delete URL
+                }
+            });
+        });
+    });
+});
+</script>

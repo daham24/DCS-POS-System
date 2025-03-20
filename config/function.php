@@ -230,5 +230,32 @@ function getCount($tableName){
   }
 }
 
+function getByColumn($table, $column, $value) {
+  global $conn;
+
+  // Escape inputs to prevent SQL injection
+  $table = mysqli_real_escape_string($conn, $table);
+  $column = mysqli_real_escape_string($conn, $column);
+  $value = mysqli_real_escape_string($conn, $value);
+
+  // Build the query
+  $query = "SELECT * FROM $table WHERE $column='$value'";
+  $result = mysqli_query($conn, $query);
+
+  if ($result) {
+      // Fetch all rows as an associative array
+      $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      return [
+          'status' => 200,
+          'data' => $data
+      ];
+  } else {
+      return [
+          'status' => 500,
+          'message' => 'Something Went Wrong.'
+      ];
+  }
+}
+
 
 ?>

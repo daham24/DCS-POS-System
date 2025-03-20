@@ -107,8 +107,11 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="repairs-delete.php?id=<?= $repair['id']; ?>" 
-                                                        onclick="return confirm('Are you sure you want to delete this repair?');">
+                                                        <a 
+                                                            class="dropdown-item delete-btn" 
+                                                            href="#" 
+                                                            data-delete-url="repairs-delete.php?id=<?= $repair['id']; ?>"
+                                                        >
                                                             <i class="fas fa-trash-alt"></i> Delete
                                                         </a>
                                                     </li>
@@ -134,3 +137,31 @@
 </div>
 
 <?php include('includes/footer.php'); ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // SweetAlert for delete confirmation
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            const deleteUrl = this.getAttribute('data-delete-url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Redirect to delete URL
+                }
+            });
+        });
+    });
+});
+</script>

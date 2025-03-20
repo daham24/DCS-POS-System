@@ -129,7 +129,7 @@ $productCosts = mysqli_query($conn, $query);
                       <td><?= date('d M Y', strtotime($cost['date'])); ?></td>
                       <td>
                         <a href="product-cost.php?edit_id=<?= $cost['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                        <a href="product-cost-code.php?delete_id=<?= $cost['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+                        <a href="#" class="btn btn-danger btn-sm delete-btn" data-delete-url="product-cost-code.php?delete_id=<?= $cost['id']; ?>">Delete</a>
                       </td>
                     </tr>
             <?php
@@ -149,11 +149,11 @@ $productCosts = mysqli_query($conn, $query);
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Calculate total cost automatically
     const quantityInput = document.querySelector('input[name="quantity"]');
     const unitPriceInput = document.querySelector('input[name="unit_price"]');
     const totalCostInput = document.querySelector('input[name="total_cost"]');
 
-    // Calculate total cost automatically
     function calculateTotalCost() {
         const quantity = parseFloat(quantityInput.value) || 0;
         const unitPrice = parseFloat(unitPriceInput.value) || 0;
@@ -162,5 +162,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     quantityInput.addEventListener('input', calculateTotalCost);
     unitPriceInput.addEventListener('input', calculateTotalCost);
+
+    // SweetAlert for delete confirmation
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            const deleteUrl = this.getAttribute('data-delete-url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Redirect to delete URL
+                }
+            });
+        });
+    });
 });
 </script>

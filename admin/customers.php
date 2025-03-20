@@ -70,11 +70,11 @@
                   <td>
                     <a href="customers-edit.php?id=<?=$item['id']?>" class="btn btn-success btn-sm">Edit</a>
                     <a 
-                        href="customers-delete.php?id=<?=$item['id']?>" 
-                        class="btn btn-danger btn-sm"
-                        onclick="return confirm('Are you sure you want to delete this customer?')"
+                        href="customers-delete.php?id=<?= $item['id'] ?>" 
+                        class="btn btn-danger btn-sm delete-btn" 
+                        data-delete-url="customers-delete.php?id=<?= $item['id'] ?>"
                     >
-                      Delete
+                        Delete
                     </a>
                   </td>
                 </tr>
@@ -98,3 +98,28 @@
 </div>
 
 <?php include('includes/footer.php');?>
+
+<script>
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            const deleteUrl = this.getAttribute('data-delete-url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Redirect to delete URL
+                }
+            });
+        });
+    });
+</script>

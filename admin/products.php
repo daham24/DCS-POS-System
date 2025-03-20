@@ -1,4 +1,4 @@
-<?php include('includes/header.php');?>
+<?php include('includes/header.php'); ?>
 
 <div class="container-fluid px-4">
   <div class="card mt-4 shadow-sm">
@@ -109,8 +109,8 @@
                     </a>
                     <a 
                         href="products-delete.php?id=<?= $item['id']; ?>" 
-                        class="btn btn-danger btn-sm <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>"
-                        onclick="return confirm('Are you sure you want to delete this product?')"
+                        class="btn btn-danger btn-sm delete-btn <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>" 
+                        data-delete-url="products-delete.php?id=<?= $item['id']; ?>"
                     >
                         Delete
                     </a>
@@ -129,4 +129,37 @@
   </div>
 </div>
 
-<?php include('includes/footer.php');?>
+<?php include('includes/footer.php'); ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // SweetAlert for delete confirmation
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            // Check if the button is disabled (for staff role)
+            if (this.classList.contains('disabled')) {
+                return;
+            }
+
+            const deleteUrl = this.getAttribute('data-delete-url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Redirect to delete URL
+                }
+            });
+        });
+    });
+});
+</script>
