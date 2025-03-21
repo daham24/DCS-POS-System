@@ -9,7 +9,7 @@
           type="text" 
           name="search" 
           class="form-control me-2" 
-          placeholder="Search products..." 
+          placeholder="Search products..."
           value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
         >
         <select name="category" class="form-select me-2">
@@ -41,7 +41,8 @@
                   WHERE 1=1";
 
         if ($searchQuery) {
-          $query .= " AND p.name LIKE '%$searchQuery%'";
+          // Search by both name and description
+          $query .= " AND (p.name LIKE '%$searchQuery%' OR p.description LIKE '%$searchQuery%')";
         }
 
         if ($categoryFilter) {
@@ -71,7 +72,7 @@
               <th>Warranty</th>
               <th>Barcode</th>
               <th>IMEI No.</th>
-              <th>Status</th> 
+              <th>Description</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -88,32 +89,27 @@
                 <td><?= $item['sell_price']; ?></td>
                 <td><?= $item['discount']; ?></td>
                 <td><span class="badge bg-dark"><?= $item['quantity']; ?></span></td>
-                <td><?= $item['warranty_period']; ?></td>
-                <td><?= $item['barcode']; ?></td>
-                <td><?= $item['imei_code']; ?></td>
+                <td><?= !empty($item['warranty_period']) ? $item['warranty_period'] : 'N/A'; ?></td>
+                <td><?= !empty($item['barcode']) ? $item['barcode'] : 'N/A'; ?></td>
+                <td><?= !empty($item['imei_code']) ? $item['imei_code'] : 'N/A'; ?></td>
+                <td><?= !empty($item['description']) ? $item['description'] : 'N/A'; ?></td>
                 <td>
-                  <?php
-                  if ($item['status'] == 1) {
-                    echo '<span class="badge bg-danger">Hidden</span>';
-                  } else {
-                    echo '<span class="badge bg-primary">Visible</span>';
-                  }
-                  ?>
-                </td>
-                <td>
-                    <a 
-                        href="products-edit.php?id=<?= $item['id']; ?>" 
-                        class="btn btn-success btn-sm <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>"
-                    >
-                        Edit
-                    </a>
-                    <a 
-                        href="products-delete.php?id=<?= $item['id']; ?>" 
-                        class="btn btn-danger btn-sm delete-btn <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>" 
-                        data-delete-url="products-delete.php?id=<?= $item['id']; ?>"
-                    >
-                        Delete
-                    </a>
+                  <!-- Dropdown for Edit and Delete actions -->
+                  <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      Actions
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <!-- Edit action -->
+                      <li>
+                        <a href="products-edit.php?id=<?= $item['id']; ?>" class="dropdown-item <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>">Edit</a>
+                      </li>
+                      <!-- Delete action -->
+                      <li>
+                        <a href="products-delete.php?id=<?= $item['id']; ?>" class="dropdown-item delete-btn <?= ($_SESSION['role'] == 'staff') ? 'disabled' : ''; ?>" data-delete-url="products-delete.php?id=<?= $item['id']; ?>">Delete</a>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
               </tr>
             <?php endforeach; ?>

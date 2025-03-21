@@ -74,7 +74,7 @@
           </div>
           <div class="col-md-2 mb-3">
             <label for="">Warranty Period</label>
-            <input type="text" name="warranty_period" required class="form-control"/>
+            <input type="text" name="warranty_period" class="form-control"/>
           </div>
           <div class="col-md-12 mb-3">
             <label for="">Image </label>

@@ -36,7 +36,6 @@
                         <div><input type="checkbox" name="physical_condition[]" value="Volume key issues"> Volume key issues</div>
                         <div><input type="checkbox" name="physical_condition[]" value="Software issues"> Software issues</div>
                         <div><input type="checkbox" name="physical_condition[]" value="Camera issues"> Camera issues</div>
-                        <div><input type="checkbox" name="physical_condition[]" value="Other"> Other</div>
                     </div>
                 </div>
 
@@ -50,7 +49,7 @@
                         <div><input type="checkbox" name="received_items[]" value="Memory card"> Memory card</div>
                         <div><input type="checkbox" name="received_items[]" value="Handset"> Handset</div>
                         <div><input type="checkbox" name="received_items[]" value="Sim"> Sim</div>
-                        <div><input type="checkbox" name="received_items[]" value="Other"> Other</div>
+                        <div><input type="checkbox" name="received_items[]" value="Sim Tary"> Sim Tray</div>
                     </div>
                 </div>
 

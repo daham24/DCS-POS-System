@@ -107,11 +107,11 @@
           </div>
           <div class="col-md-4 mb-3">
             <label for="">Barcode </label>
-            <input type="text" name="barcode" required value="<?= htmlspecialchars($product['data']['barcode'] ?? ''); ?>" class="form-control" />
+            <input type="text" name="barcode"  value="<?= htmlspecialchars($product['data']['barcode'] ?? ''); ?>" class="form-control" />
           </div>
           <div class="col-md-4 mb-3">
             <label for="">IMEI No </label>
-            <input type="text" name="imei_code" required value="<?= htmlspecialchars($product['data']['imei_code'] ?? ''); ?>" class="form-control" />
+            <input type="text" name="imei_code"  value="<?= htmlspecialchars($product['data']['imei_code'] ?? ''); ?>" class="form-control" />
           </div>
           <div class="col-md-2 mb-3">
             <label for="">Quantity *</label>
@@ -119,7 +119,7 @@
           </div>
           <div class="col-md-2 mb-3">
             <label for="">Warranty </label>
-            <input type="text" name="warranty_period" required value="<?= htmlspecialchars($product['data']['warranty_period'] ?? ''); ?>" class="form-control" />
+            <input type="text" name="warranty_period"  value="<?= htmlspecialchars($product['data']['warranty_period'] ?? 'N/A'); ?>" class="form-control" />
           </div>
           <div class="col-md-12 mb-3">
             <label for="">Image</label>
