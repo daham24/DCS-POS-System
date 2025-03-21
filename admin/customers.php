@@ -1,7 +1,6 @@
-<?php include('includes/header.php');?>
+<?php include('includes/header.php'); ?>
 
 <div class="container-fluid px-4">
-
   <div class="card mt-4 shadow-sm">
       <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="mb-0">Customers</h4>
@@ -11,7 +10,7 @@
             type="text" 
             name="search" 
             class="form-control me-2" 
-            placeholder="Search by phone number..." 
+            placeholder="Search by phone number" 
             value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
           >
           <button type="submit" class="btn btn-dark">Search</button>
@@ -48,12 +47,21 @@
                 <th>Email Id</th>
                 <th>Phone</th>
                 <th>Status</th> <!-- New column for is_ban -->
+                <th>Orders</th> <!-- New column for orders count -->
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               
-                <?php foreach($customers as $item) : ?>
+                <?php 
+                while($item = mysqli_fetch_assoc($customers)) :
+
+                  // Query to count orders for each customer
+                  $customerId = $item['id'];
+                  $orderQuery = "SELECT COUNT(*) AS order_count FROM orders WHERE customer_id = '$customerId'";
+                  $orderResult = mysqli_query($conn, $orderQuery);
+                  $orderCount = mysqli_fetch_assoc($orderResult)['order_count'];
+                ?>
                 <tr>
                   <td><?= $item['name']?></td>  
                   <td><?= $item['email']?></td>  
@@ -68,6 +76,11 @@
                     ?>
                   </td>
                   <td>
+                    <!-- Show the number of orders, and link to the orders page -->
+                    <span class="badge bg-info"><?= $orderCount ?> Order(s)</span>
+                    <a href="customer-orders.php?id=<?= $item['id'] ?>" class="btn btn-link btn-sm">View Orders</a>
+                  </td>
+                  <td>
                     <a href="customers-edit.php?id=<?=$item['id']?>" class="btn btn-success btn-sm">Edit</a>
                     <a 
                         href="customers-delete.php?id=<?= $item['id'] ?>" 
@@ -78,7 +91,7 @@
                     </a>
                   </td>
                 </tr>
-                <?php endforeach; ?>
+                <?php endwhile; ?> <!-- Closing the while loop -->
     
             </tbody>
           </table>

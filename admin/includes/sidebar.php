@@ -71,6 +71,20 @@
                     </nav>
                 </div>
 
+                <a class="nav-link <?= ($page == 'return-items.php') || ($page == 'return-items-view.php') ? 'collapse active' : 'collapsed'; ?>" href="#" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#collapseReturn" aria-expanded="false" aria-controls="collapseReturn">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-rotate-left"></i></div>
+                    Returns
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse <?= ($page == 'return-items.php') || ($page == 'return-items-view.php') ? 'show' : ''; ?>" id="collapseReturn" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link <?= $page == 'return-items.php' ? 'active' : ''; ?>" href="return-items.php">Create Return Item</a>
+                        <a class="nav-link <?= $page == 'return-items-view.php' ? 'active' : ''; ?>" href="return-items-view.php">View Return Items</a>
+                    </nav>
+                </div>
+
                 <div class="sb-sidenav-menu-heading">Analytics</div>
 
                 <a class="nav-link <?= $page == 'order-summery-view.php' ? 'active' : ''; ?>" href="order-summery-view.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >

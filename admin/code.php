@@ -624,5 +624,54 @@ if (isset($_POST['updateRepair'])) {
 }
 
 
+if (isset($_POST['returnItems'])) {
+  // Get the selected items and reason for the return
+  $items = $_POST['items']; // Items is an array of selected items
+  $reason = validate($_POST['reason']); // Reason for the return
+
+  // Loop through each selected item
+  foreach ($items as $item) {
+      list($order_id, $product_id) = explode('-', $item); // Get order ID and product ID
+
+      // Check product stock, if needed
+      // Here you can fetch product data if required
+
+      // Insert the return information into the 'returns' table
+      $query = "INSERT INTO returns (order_item_id, product_id, quantity, return_date, reason, status)
+                VALUES ('$order_id', '$product_id', 1, CURDATE(), '$reason', 'pending')";
+      $result = mysqli_query($conn, $query);
+
+      if (!$result) {
+          echo "Error processing return: " . mysqli_error($conn);
+          exit; // Stop further processing if the query fails
+      }
+  }
+
+  // Return processed successfully, redirect to return-item-view.php
+  header("Location: return-items-view.php"); // Redirect to the return items view page
+  exit; // Stop script execution after redirection
+}
+
+
+if (isset($_POST['updateReturn'])) {
+  $returnId = $_POST['return_id']; // Get return ID
+  $returnDate = $_POST['return_date']; // Get new return date
+  $reason = $_POST['reason']; // Get updated reason
+  $status = $_POST['status']; // Get new status
+
+  // Update the return item in the database
+  $query = "UPDATE returns 
+            SET return_date = '$returnDate', reason = '$reason', status = '$status' 
+            WHERE id = '$returnId'";
+
+  if (mysqli_query($conn, $query)) {
+      // Redirect back to the returns page or success page
+      header("Location: return-items-view.php");
+      exit;
+  } else {
+      echo "Error updating return: " . mysqli_error($conn);
+  }
+}
+
 
 ?>
