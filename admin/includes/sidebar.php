@@ -49,11 +49,10 @@
                     Products
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse <?= ($page == 'products-create.php') || ($page == 'products.php') || ($page == 'product-cost.php') ? 'show' : ''; ?>" id="collapseProduct" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse <?= ($page == 'products-create.php') || ($page == 'products.php') ? 'show' : ''; ?>" id="collapseProduct" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link <?= $page == 'products-create.php' ? 'active' : ''; ?>" href="products-create.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >Create Product</a>
                         <a class="nav-link <?= $page == 'products.php' ? 'active' : ''; ?>" href="products.php" >View Products</a>
-                        <a class="nav-link <?= $page == 'product-cost.php' ? 'active' : ''; ?>" href="product-cost.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >Product Costs</a>
                     </nav>
                 </div>
 
@@ -90,6 +89,23 @@
                 <a class="nav-link <?= $page == 'order-summery-view.php' ? 'active' : ''; ?>" href="order-summery-view.php" <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                     Summery
+                </a>
+
+                <div class="sb-sidenav-menu-heading">Expences</div>
+
+                <a class="nav-link <?= $page == 'product-cost.php' ? 'active' : ''; ?>" href="product-cost.php"  <?= $_SESSION['role'] == 'staff' ? 'style="pointer-events: none; opacity: 0.6;"' : ''; ?> >
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                    Product Cost
+                </a>
+
+                <a class="nav-link <?= $page == 'bank-deposits.php' ? 'active' : ''; ?>" href="bank-deposits.php"  >
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-building-columns"></i></div>
+                    Bank Deposits
+                </a>
+
+                <a class="nav-link <?= $page == 'utility-bills.php' ? 'active' : ''; ?>" href="utility-bills.php"  >
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-wallet"></i></div>
+                    Utility Bills
                 </a>
 
                 <div class="sb-sidenav-menu-heading">Manage Users</div>
